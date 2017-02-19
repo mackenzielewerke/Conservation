@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AngularCircus.web.Controllers
 {
+
+
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -40,11 +40,10 @@
 </div>
 
 <div class="row" ng-cloak ng-controller="PerformerController as prc">
-    <script src="~/js/controllers/PerformerController.js"></script>
+
     <div class="col-sm-6 col-sm-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-
                 <h3 class="panel-title"> Performer  |   Gender</h3>
             </div>
             <ol class="list-group">
@@ -78,7 +77,6 @@
         </div>
     </div>
 </div>
-
 <div class="row" ng-cloak ng-controller="ActController as aTc">
     <script src="~/js/controllers/ActController.js"></script>
     <div class="col-sm-6 col-sm-3">
@@ -102,7 +100,6 @@
                         <button class="btn btn-danger" ng-click="aTc.Remove(act)"> Remove</button>
                     </div>
                 </li>
-
                 <li class="list-group-item clearfix" ng-init="act = {}">
                     <div class="col-sm-8">
                         <label> New Act</label>
@@ -120,7 +117,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="row" ng-cloak ng-controller="AnimalController as aNc">
     <script src="~/js/controllers/AnimalController.js"></script>
@@ -165,45 +161,45 @@
 </div>
 
 
-<div class="row" ng-cloak ng-controller="AuthenticationController as aRc">
-    <div class="col-sm-6 col-sm-3">
-        <script src="~/js/controllers/AuthenticationController.js"> </script>
-        <div class="panel panel-default">
-            <div class="panel-heading">
+@*<div class="row" ng-cloak ng-controller="AuthenticationController as aRc">
+        <div class="col-sm-6 col-sm-3">
+            <script src="~/js/controllers/AuthenticationController.js"> </script>
+            <div class="panel panel-default">
+                <div class="panel-heading">
 
-                <h3 class="panel-title"> Users</h3>
-            </div>
-            <ol class="list-group">
+                    <h3 class="panel-title"> Users</h3>
+                </div>
+                <ol class="list-group">
 
-                <li class="list-group-item clearfix" ng-repeat="users in aRc.User">
-                    <div class="col-sm-8">
-                        <div class="checkbox">
+                    <li class="list-group-item clearfix" ng-repeat="users in aRc.User">
+                        <div class="col-sm-8">
+                            <div class="checkbox">
 
-                            <label>
-                                <input type="checkbox" ng-model="users.isDone" ng-true-value="true" ng-false-value="false" />
-                                {{users.name}}
-                            </label>
+                                <label>
+                                    <input type="checkbox" ng-model="users.isDone" ng-true-value="true" ng-false-value="false" />
+                                    {{users.name}}
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <button class="btn btn-danger" ng-click="aRc.Remove(users)"> Remove</button>
-                    </div>
-                </li>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger" ng-click="aRc.Remove(users)"> Remove</button>
+                        </div>
+                    </li>
 
-                <li class="list-group-item clearfix" ng-init="users = {}">
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" placeholder="Name" ng-model="users.name" />
-                        <input type="text" class="form-control" placeholder="Email" ng-model="users.email" />
-                        <input type="text" class="form-control" placeholder="Password" ng-model="users.password" />
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="aRc.Add(users)" ng-keydown="$event.which === 13 && aRc.Add(users)">Add</button>
-                    </div>
-                </li>
-            </ol>
+                    <li class="list-group-item clearfix" ng-init="users = {}">
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="users.name" />
+                            <input type="text" class="form-control" placeholder="Email" ng-model="users.email" />
+                            <input type="text" class="form-control" placeholder="Password" ng-model="users.password" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary" ng-click="aRc.Add(users)" ng-keydown="$event.which === 13 && aRc.Add(users)">Add</button>
+                        </div>
+                    </li>
+                </ol>
+            </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 
 
