@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
+
 using Microsoft.AspNetCore.Identity;
 
 using AngularCircus.web.Data;
@@ -46,7 +47,7 @@ namespace Authentication.Web.Controllers
 
             if (result.Succeeded)
             {
-                return Redirect("~/home/index");
+                return View(model);
 
             }
             else
@@ -56,7 +57,7 @@ namespace Authentication.Web.Controllers
         }
 
         [HttpPost("~/authentication/logins")]
-        public async Task<IActionResult> Logins([FromBody]LoginRequest model)
+        public async Task<IActionResult> Login([FromBody]LoginRequest model)
         {
             var user = await UserManager.FindByEmailAsync(model.Email);
 

@@ -39,7 +39,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpGet("{id}")]
         public Circus Get(int id)
         {
-            return _context.Circuses.First(q=>q.Id == id);
+            return _context.Circuses.First(q => q.Id == id);
         }
 
         // POST api/values

@@ -15,7 +15,7 @@ namespace AngularCircus.web.Models
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Act> Acts { get; set; }
-        public DbSet<Possession> Possessions { get; set; }
+    
 
         public AngularCircusContext(DbContextOptions<AngularCircusContext> options) : base()
         {
