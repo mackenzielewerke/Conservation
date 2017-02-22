@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace AngularCircus.web.Models
 {
-    public class RegisterRequest
+    public class Possession
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Owner { get; set; }
     }
 }

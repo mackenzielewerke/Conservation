@@ -1,76 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using AngularCircus.web.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
+using Microsoft.AspNetCore.Identity;
 
-namespace AngularCircus.web.Controllers.Authentication
+using AngularCircus.web.Data;
+
+namespace Authentication.Web.Controllers
 {
+    [Produces("application/json")]
+    [Route("authentication")]
     public class AuthenticationController : Controller
     {
-        public SignInManager<ApplicationUser> SignInManager { get; set; }
         public UserManager<ApplicationUser> UserManager { get; set; }
+        public SignInManager<ApplicationUser> SignInManager { get; set; }
 
-
-        public AuthenticationController(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+        public AuthenticationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
-            SignInManager = signInManager;
             UserManager = userManager;
+            SignInManager = signInManager;
         }
-
-        [HttpGet]
-        public IActionResult Login()
+        [Route("~/authentication/logins")]
+        public IActionResult Logins()
         {
-            return View(new LoginRequest());
+            return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest model)
-        {
-            var user = await UserManager.FindByEmailAsync(model.Email);
-            if (user != null)
-            {
-                var result = await SignInManager.PasswordSignInAsync(user, model.Password, false, true);
-
-
-                if (result.Succeeded)
-                {
-                    return Redirect("~/");
-                }
-                else if (result.IsLockedOut)
-                {
-                    return View("LockedOut");
-                }
-                else if (result.IsNotAllowed)
-                {
-                    return View("NotAllowed");
-                }
-                else
-                {
-                    return View(model);
-                }
-            }
-            return View(model);
-        }
-
-        [HttpGet]
+        [Route("~/authentication/register")]
         public IActionResult Register()
         {
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterRequest model)
+
+        [HttpPost("~/authentication/register")]
+        public async Task<IActionResult> Register([FromBody]RegisterRequest model)
         {
             var user = new ApplicationUser();
             user.Email = user.UserName = model.Email;
+            user.Signature = Guid.NewGuid();
 
             var result = await UserManager.CreateAsync(user, model.Password);
-            await SignInManager.PasswordSignInAsync(user, model.Password, false, false);
-            return View();
+
+            if (result.Succeeded)
+            {
+                return Redirect("~/home/index");
+
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("~/authentication/logins")]
+        public async Task<IActionResult> Logins([FromBody]LoginRequest model)
+        {
+            var user = await UserManager.FindByEmailAsync(model.Email);
+
+            if (user != null)
+            {
+                await SignInManager.SignInAsync(user, false);
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
+
+        [HttpGet("~/authentication/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await SignInManager.SignOutAsync();
+
+            return Redirect("~/");
         }
     }
 }

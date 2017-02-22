@@ -5,6 +5,7 @@
 /// <reference path="js/controllers/authenticationcontroller.js" />
 /// <reference path="js/controllers/CircusController.js" />
 /// <reference path="js/controllers/performercontroller.js" />
+/// <reference path="js/controllers/possession-controller.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />

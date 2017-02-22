@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using AngularCircus.web.Data;
 
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,10 +17,14 @@ namespace AngularCircus.web.Controllers.ApiControllers
     public class ActController : Controller
     {
         public AngularCircusContext Context { get; set; }
+        private UserManager<ApplicationUser> _userManager { get; set; }
 
-        public ActController()
+
+        private readonly AngularCircusContext _context;
+        public ActController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
-            Context = new AngularCircusContext();
+            _userManager = userManager;
+            _context = context;
         }
 
 
@@ -26,22 +32,22 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpGet]
         public IEnumerable<Act> Get()
         {
-            return Context.Acts;
+            return _context.Acts;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Act Get(int id)
         {
-            return Context.Acts.First(q => q.Id == id);
+            return _context.Acts.First(q => q.Id == id);
         }
 
         // POST api/values
         [HttpPost]
         public Act Post([FromBody]Act value)
         {
-            Context.Acts.Add(value);
-            Context.SaveChanges();
+            _context.Acts.Add(value);
+            _context.SaveChanges();
             return value;
         }
 
@@ -51,7 +57,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         {
             var existing = Context.Acts.First(q => q.Id == id);
             existing.Name = value.Name;
-            Context.SaveChanges();
+            _context.SaveChanges();
             return value;
         }
 
@@ -60,8 +66,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
         public void Delete(int id)
         {
             var existing = Context.Acts.First(q => q.Id == id);
-            Context.Acts.Remove(existing);
-            Context.SaveChanges();
+            _context.Acts.Remove(existing);
+            _context.SaveChanges();
         }
     }
 }

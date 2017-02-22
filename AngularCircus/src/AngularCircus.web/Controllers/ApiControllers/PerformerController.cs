@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using AngularCircus.web.Data;
 
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,33 +17,36 @@ namespace AngularCircus.web.Controllers.ApiControllers
     public class PerformerController : Controller
     {
         public AngularCircusContext Context { get; set; }
+        private UserManager<ApplicationUser> _userManager { get; set; }
 
-        public PerformerController()
+
+        private readonly AngularCircusContext _context;
+        public PerformerController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
-            Context = new AngularCircusContext();
+            _userManager = userManager;
+            _context = context;
         }
-
 
         // GET: api/values
         [HttpGet]
         public IEnumerable<Performer> Get()
         {
-            return Context.Performers;
+            return _context.Performers;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Performer Get(int id)
         {
-            return Context.Performers.First(q => q.Id == id);
+            return _context.Performers.First(q => q.Id == id);
         }
 
         // POST api/values
         [HttpPost]
         public Performer Post([FromBody]Performer value)
         {
-            Context.Performers.Add(value);
-            Context.SaveChanges();
+            _context.Performers.Add(value);
+            _context.SaveChanges();
             return value;
         }
 
@@ -49,9 +54,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpPut("{id}")]
         public Performer Put(int id, [FromBody]Performer value)
         {
-            var existing = Context.Performers.First(q => q.Id == id);
+            var existing = _context.Performers.First(q => q.Id == id);
                 existing.Name = value.Name;
-            Context.SaveChanges();
+            _context.SaveChanges();
             return value;
         }
 
@@ -59,9 +64,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var existing = Context.Performers.First(q => q.Id == id);
-            Context.Performers.Remove(existing);
-            Context.SaveChanges();
+            var existing = _context.Performers.First(q => q.Id == id);
+            _context.Performers.Remove(existing);
+            _context.SaveChanges();
         }
     }
 }

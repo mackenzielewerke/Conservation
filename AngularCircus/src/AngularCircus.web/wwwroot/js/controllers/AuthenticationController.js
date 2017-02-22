@@ -1,49 +1,28 @@
-﻿
+﻿(function () {
+    'use strict';
 
-(function () {
+    angular
+        .module('Application')
+        .controller('AuthenticationController', AuthenticationController);
 
-    var application = angular.module('Application');
+    AuthenticationController.$inject = ['$http', '$location'];
 
-    var controller = application.controller('AuthenticationController', AuthenticationController);
-
-    AuthenticationController.$inject = ['$http'];
-
-    function AuthenticationController($http) {
+    function AuthenticationController($http, $location) {
+        /* jshint validthis:true */
         var vm = this;
 
-        var count = 0;
-
-        vm.Authentication = [];
-
-        var promise = $http.get('api/authentication');
-
-        promise.then(function (result) {
-            vm.Authentication = result.data;
-        });
-
-        vm.Add = function (authentication) {
-            var copy = angular.copy(authentication);
-            authentication.email = '';
-            
-    
-
-            var promise = $http.post('api/authentication', copy);
+        vm.Register = function (model) {
+            var promise = $http.post('/authentication/register', model);
             promise.then(function (result) {
-                vm.Authentication.push(result.data);
-            }, function (result) {
+                $location.path('/');
+                throw 'test';
             });
         };
 
-        vm.Remove = function (authentication) {
-
-            var url = 'api/authentication/{email}'.replace('{email}', authentication.email);
-
-            var promise = $http.delete(url);
+        vm.Login = function (model) {
+            var promise = $http.post('/authentication/logins', model);
             promise.then(function (result) {
-
-
-                var index = vm.Authentication.indexOf(authentication);
-                vm.Authentication.splice(index, 1);
+                $location.path('/');
             });
         };
     }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using AngularCircus.web.Data;
 
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,33 +17,37 @@ namespace AngularCircus.web.Controllers.ApiControllers
     public class AnimalController : Controller
     {
         public AngularCircusContext Context { get; set; }
+        private UserManager<ApplicationUser> _userManager { get; set; }
 
-        public AnimalController()
+
+        private readonly AngularCircusContext _context;
+
+        public AnimalController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
-            Context = new AngularCircusContext();
+            _userManager = userManager;
+            _context = context;
         }
-
 
         // GET: api/values
         [HttpGet]
         public IEnumerable<Animal> Get()
         {
-            return Context.Animals;
+            return _context.Animals;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Animal Get(int id)
         {
-            return Context.Animals.First(q => q.Id == id);
+            return _context.Animals.First(q => q.Id == id);
         }
 
         // POST api/values
         [HttpPost]
         public Animal Post([FromBody]Animal value)
         {
-            Context.Animals.Add(value);
-            Context.SaveChanges();
+            _context.Animals.Add(value);
+            _context.SaveChanges();
             return value;
         }
 
@@ -49,9 +55,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpPut("{id}")]
         public Animal Put(int id, [FromBody]Animal value)
         {
-            var existing = Context.Animals.First(q => q.Id == id);
+            var existing = _context.Animals.First(q => q.Id == id);
             existing.Name = value.Name;
-            Context.SaveChanges();
+            _context.SaveChanges();
             return value;
         }
 
@@ -59,9 +65,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var existing = Context.Animals.First(q => q.Id == id);
-            Context.Animals.Remove(existing);
-            Context.SaveChanges();
+            var existing = _context.Animals.First(q => q.Id == id);
+            _context.Animals.Remove(existing);
+            _context.SaveChanges();
         }
     }
 }
