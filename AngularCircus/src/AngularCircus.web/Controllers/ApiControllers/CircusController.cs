@@ -29,6 +29,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         {
             _userManager = userManager;
             _context = context;
+
         }
 
         [Route("~/circus/circus")]

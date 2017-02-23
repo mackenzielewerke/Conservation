@@ -86,6 +86,7 @@ namespace AngularCircus.web
 
 
             app.UseStaticFiles();
+            app.UseIdentity();
 
             app.UseIdentity();
 
