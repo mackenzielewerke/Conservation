@@ -48,7 +48,6 @@ namespace Authentication.Web.Controllers
             if (result.Succeeded)
             {
                 return View(model);
-
             }
             else
             {
@@ -64,14 +63,12 @@ namespace Authentication.Web.Controllers
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, false);
-
                 return Ok();
             }
             else
             {
                 return BadRequest();
             }
-
         }
 
         [HttpGet("~/authentication/logout")]

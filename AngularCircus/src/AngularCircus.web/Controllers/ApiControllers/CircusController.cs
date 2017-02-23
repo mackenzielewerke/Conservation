@@ -25,6 +25,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         {
             _userManager = userManager;
             _context = context;
+
         }
 
 
@@ -44,8 +45,12 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // POST api/values
         [HttpPost]
-        public Circus Post([FromBody]Circus value)
+        public Circus Post([FromBody]Circus value, ApplicationUser model)
         {
+            if (model.Id != null)
+            {
+              value.Owner = model.Id;
+            }
             _context.Circuses.Add(value);
             _context.SaveChanges();
             return value;
