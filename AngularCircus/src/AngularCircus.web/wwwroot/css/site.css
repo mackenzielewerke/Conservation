@@ -1,27 +1,32 @@
 ﻿body {
-
      padding-top: 50px;
      padding-bottom: 20px;
+     font-family: "AR BONNIE", AR, serif;
+     font-size: 30px;
+     height: 100%;
 }
 
-.background-image1  
-{
-     margin: 0;
-     background: url(../images/background.jpeg);
-     background-color: darkgoldenrod;
-     background-size: 1440px 800px;
-     background-repeat:no-repeat;
-     border: groove;
-     border-color:darkred;
-     display: compact;
-     font: 13px/18px "Pangolin", Sansita, Pangolin, sans-serif;
+ html{
+     height: 100%;
  }
+/*{
+
+ }*/
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+     background-image: url(../images/img-thing.jpg);
+     background-size: cover;
+     background-color: darkgoldenrod;
+     background-repeat:no-repeat;
+     border: groove;
+     border-color:darkred;
+     display: compact;
+     min-height: 100%;
+
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */

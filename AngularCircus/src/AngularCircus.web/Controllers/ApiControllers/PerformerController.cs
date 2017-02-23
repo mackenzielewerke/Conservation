@@ -35,7 +35,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         {
             return View();
         }
-        
+
         [Route("~/api/performers")]
         [HttpGet]
         public IEnumerable<Performer> GetPerformers()

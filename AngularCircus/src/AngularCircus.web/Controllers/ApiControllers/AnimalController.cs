@@ -3,88 +3,86 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AngularCircus.web.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using AngularCircus.web.Models;
 using Microsoft.AspNetCore.Identity;
 using AngularCircus.web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 
 
-
 namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
-    [Route("~/circus")]
-    [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
-    public class CircusController : Controller
+    [Authorize]
+    public class AnimalController : Controller
     {
         private readonly AngularCircusContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
         public AngularCircusContext Context { get; set; }
 
-        public CircusController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
+        public AnimalController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
             _userManager = userManager;
             _context = context;
         }
 
-        [Route("~/circus/circus")]
-        public IActionResult Circus()
+        [Route("~/animal")]
+        [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+        public IActionResult Index()
         {
             return View();
         }
 
-        [HttpGet("~/api/circus/circus")]
-        public IEnumerable<Circus> GetCircuses()
+        [Route("~/api/animals")]
+        [HttpGet]
+        public IEnumerable<Animal> GetAnimals()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Circuses.Where(q => q.Owner == userId).ToList();
+            return _context.Animals.Where(q => q.Name == userId).ToList();
         }
 
-        // GET api/circuses/5
-        [HttpGet("~/api/circus/circus/{id}")]
-        public async Task<IActionResult> GetCircus(int id)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            var userId = _userManager.GetUserId(User);
-            Circus circus = await _context.Circuses
-                .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
-
-            if (circus == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(circus);
-        }
-
-
-
-        // POST api/circuses
-        [HttpPost("~/api/circus/circus")]
-        public async Task<IActionResult> PostCircus([FromBody]Circus circus)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAnimals([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            circus.Owner = _userManager.GetUserId(User);
-            _context.Circuses.Add(circus);
+            var userId = _userManager.GetUserId(User);
+            Animal Animal = await _context.Animals
+                .SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+
+            if (Animal == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Animal);
+        }
+
+
+
+        // POST api/performers
+        [HttpPost]
+        public async Task<IActionResult> PostAnimal([FromBody]Animal animal)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            animal.Name = _userManager.GetUserId(User);
+            _context.Animals.Add(animal);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch
             {
-                if (CircusExists(circus.Id))
+                if (AnimalExists(animal.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -93,25 +91,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
                     throw;
                 }
             }
-            return CreatedAtAction("GetCircus", new { id = circus.Id }, circus);
+            return CreatedAtAction("GetAnimal", new { id = animal.Id }, animal);
         }
 
-        // PUT api/circuses/5
-        [HttpPut("~/api/circus/circus")]
-        public async Task<IActionResult> PutCircus([FromBody]int id, [FromBody] Circus circus)
+        // PUT api/performers/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAnimal([FromBody]int id, [FromBody] Animal animal)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != circus.Id)
+            if (id != animal.Id)
             {
                 return BadRequest();
             }
 
-            circus.Owner = _userManager.GetUserId(User);
-            _context.Entry(circus).State = EntityState.Modified;
+            animal.Name = _userManager.GetUserId(User);
+            _context.Entry(animal).State = EntityState.Modified;
 
             try
             {
@@ -120,7 +118,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!CircusExists(id))
+                if (!AnimalExists(id))
                 {
                     return NotFound();
                 }
@@ -132,38 +130,35 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return NoContent();
         }
 
-
-        // DELETE api/circuses/5
-        [HttpDelete("~/api/circus/circus")]
-        public async Task<IActionResult> DeleteCircus([FromRoute] int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAnimal([FromRoute] int id)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             var userId = _userManager.GetUserId(User);
 
-            Circus circus = await _context.Circuses
-                .Where(q => q.Owner == userId)
+            Animal Animal = await _context.Animals
+                .Where(q => q.Name == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
-            if(circus == null)
+            if (Animal == null)
             {
                 return NotFound();
             }
 
-            _context.Circuses.Remove(circus);
+            _context.Animals.Remove(Animal);
             await _context.SaveChangesAsync();
 
-            return Ok(circus);
-
+            return Ok(Animal);
         }
-        
-        private bool CircusExists(int id)
+
+        private bool AnimalExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Circuses.Any(e => e.Owner == userId && e.Id == id);
+            return _context.Animals.Any(e => e.Name == userId && e.Id == id);
         }
     }
 }

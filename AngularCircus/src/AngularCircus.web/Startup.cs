@@ -45,11 +45,7 @@ namespace AngularCircus.web
         public void ConfigureServices(IServiceCollection services)
         {
             //// Add framework services.
-            services.AddDbContext<AngularCircusContext>(//options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("@Data Source=.\\SQLEXPRESS;InitialCatalog=AngularCircus;Integrated Security=true;"));
-
-            //}
+            services.AddDbContext<AngularCircusContext>(
                 );
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>

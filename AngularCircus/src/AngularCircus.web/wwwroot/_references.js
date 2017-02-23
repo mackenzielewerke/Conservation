@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/application.js" />
 /// <reference path="js/controllers/actcontroller.js" />
+/// <reference path="js/controllers/animalcontroller.js" />
 /// <reference path="js/controllers/authentication.js" />
 /// <reference path="js/controllers/CircusController.js" />
 /// <reference path="js/controllers/performercontroller.js" />
