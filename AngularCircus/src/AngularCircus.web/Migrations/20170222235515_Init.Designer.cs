@@ -8,8 +8,8 @@ using AngularCircus.web.Models;
 namespace AngularCircus.web.Migrations
 {
     [DbContext(typeof(AngularCircusContext))]
-    [Migration("20170217214328_performercontrollermigration")]
-    partial class performercontrollermigration
+    [Migration("20170222235515_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -17,64 +17,20 @@ namespace AngularCircus.web.Migrations
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AngularCircus.web.Data.ApplicationUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("AngularCircus.web.Models.Act", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("AnimalId");
+
+                    b.Property<bool>("IsDone");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnimalId");
 
                     b.ToTable("Acts");
                 });
@@ -85,6 +41,8 @@ namespace AngularCircus.web.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Gender");
+
+                    b.Property<bool>("IsDone");
 
                     b.Property<string>("Name");
 
@@ -104,6 +62,8 @@ namespace AngularCircus.web.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Owner");
+
                     b.HasKey("Id");
 
                     b.ToTable("Circuses");
@@ -115,6 +75,8 @@ namespace AngularCircus.web.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Gender");
+
+                    b.Property<bool>("IsDone");
 
                     b.Property<string>("Name");
 
@@ -128,11 +90,19 @@ namespace AngularCircus.web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CircusId");
+
+                    b.Property<bool>("IsDone");
+
                     b.Property<decimal>("Price");
 
                     b.Property<string>("PriceType");
 
+                    b.Property<DateTime>("ShowDate");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CircusId");
 
                     b.ToTable("Tickets");
                 });
@@ -146,10 +116,10 @@ namespace AngularCircus.web.Migrations
                         .IsConcurrencyToken();
 
                     b.Property<string>("Name")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
-                        .HasAnnotation("MaxLength", 256);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -176,6 +146,61 @@ namespace AngularCircus.web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
@@ -243,6 +268,31 @@ namespace AngularCircus.web.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("AngularCircus.web.Data.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser");
+
+                    b.Property<Guid>("Signature");
+
+                    b.ToTable("Users");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AngularCircus.web.Models.Act", b =>
+                {
+                    b.HasOne("AngularCircus.web.Models.Animal", "Animal")
+                        .WithMany()
+                        .HasForeignKey("AnimalId");
+                });
+
+            modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>
+                {
+                    b.HasOne("AngularCircus.web.Models.Circus", "Circus")
+                        .WithMany()
+                        .HasForeignKey("CircusId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -253,7 +303,7 @@ namespace AngularCircus.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("AngularCircus.web.Data.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -261,7 +311,7 @@ namespace AngularCircus.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("AngularCircus.web.Data.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -274,7 +324,7 @@ namespace AngularCircus.web.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AngularCircus.web.Data.ApplicationUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

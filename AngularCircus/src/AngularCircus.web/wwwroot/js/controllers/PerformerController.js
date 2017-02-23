@@ -15,10 +15,12 @@
 
         vm.Performer = [];
 
-        var promise = $http.get('api/performer');
+        var promise = $http.get('api/performers');
 
         promise.then(function (result) {
             vm.Performer = result.data;
+        }, function (result) {
+            console.log(result);
         });
 
         vm.Add = function (performer) {

@@ -11,6 +11,10 @@ using Microsoft.Extensions.Logging;
 using AngularCircus.web.Models;
 using AngularCircus.web.Data;
 using AngularCircus.web.Services;
+using Microsoft.EntityFrameworkCore;
+
+
+
 
 namespace AngularCircus.web
 {
@@ -21,8 +25,8 @@ namespace AngularCircus.web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+            //.AddEnvironmentVariables();
 
             if (env.IsDevelopment())
             {
@@ -34,21 +38,34 @@ namespace AngularCircus.web
             Configuration = builder.Build();
         }
 
-        
+
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             //// Add framework services.
-            services.AddDbContext<AngularCircusContext>();
+            services.AddDbContext<AngularCircusContext>(//options =>
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("@Data Source=.\\SQLEXPRESS;InitialCatalog=AngularCircus;Integrated Security=true;"));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-               .AddEntityFrameworkStores<AngularCircusContext>()
+            //}
+                );
 
-              .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Cookies.ApplicationCookie.LoginPath = "/authentication/login";
+            })
+            .AddEntityFrameworkStores<AngularCircusContext>()
+            .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -71,7 +88,10 @@ namespace AngularCircus.web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {

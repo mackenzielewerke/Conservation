@@ -19,6 +19,8 @@
 
         promise.then(function (result) {
             vm.Circus = result.data;
+        }, function (result) {
+            console.log(result)
         });
 
         vm.Add = function (circus) {
@@ -27,8 +29,7 @@
 
             var promise = $http.post('api/circus', copy);
             promise.then(function (result) {
-                vm.Circus.push(result.data);
-            }, function (result) {
+                vm.Circus.push(result.data)
             });
         };
 

@@ -1,41 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using AngularCircus.web.Data;
 using Microsoft.AspNetCore.Mvc;
 using AngularCircus.web.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
-using AngularCircus.web.Data;
-
-namespace Authentication.Web.Controllers
+namespace AngularCircus.web.Controllers.Authentication
 {
     [Produces("application/json")]
-    [Route("authentication")]
+    [Route("~/authentication")]
+    [Authorize]
     public class AuthenticationController : Controller
     {
-        public UserManager<ApplicationUser> UserManager { get; set; }
         public SignInManager<ApplicationUser> SignInManager { get; set; }
 
-        public AuthenticationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public UserManager<ApplicationUser> UserManager { get; set; }
+        public AuthenticationController(SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager)
         {
-            UserManager = userManager;
             SignInManager = signInManager;
+            UserManager = userManager;
         }
-        [Route("~/authentication/logins")]
-        public IActionResult Logins()
+
+        [AllowAnonymous]
+        [Route("~/authentication/login")]
+        public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
+        [HttpPost("~/api/authentication/login")]
+        public async Task<IActionResult> Login([FromBody]LoginRequest model)
+        {
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user != null)
+            {
+                var result = await SignInManager.PasswordSignInAsync(user, model.Password, false, true);
+
+
+                if (result.Succeeded)
+                {
+                    return Ok(result.Succeeded);
+                }
+                else if (result.IsLockedOut)
+                {
+                    return BadRequest(result);
+                }
+                else if (result.IsNotAllowed)
+                {
+                    return BadRequest(result);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+
+        [AllowAnonymous]
         [Route("~/authentication/register")]
         public IActionResult Register()
         {
             return View();
         }
 
-        [HttpPost("~/authentication/register")]
+        [AllowAnonymous]
+        [HttpPost("~/api/authentication/register")]
         public async Task<IActionResult> Register([FromBody]RegisterRequest model)
         {
             var user = new ApplicationUser();
@@ -44,40 +79,21 @@ namespace Authentication.Web.Controllers
 
             var result = await UserManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if(result.Succeeded)
             {
-                return Redirect("~/home/index");
-
+                await SignInManager.PasswordSignInAsync(user, model.Password, false, false);
+                return Ok(result.Succeeded);
             }
             else
             {
                 return BadRequest();
             }
-        }
-
-        [HttpPost("~/authentication/logins")]
-        public async Task<IActionResult> Logins([FromBody]LoginRequest model)
-        {
-            var user = await UserManager.FindByEmailAsync(model.Email);
-
-            if (user != null)
-            {
-                await SignInManager.SignInAsync(user, false);
-
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
         }
 
         [HttpGet("~/authentication/logout")]
         public async Task<IActionResult> Logout()
         {
             await SignInManager.SignOutAsync();
-
             return Redirect("~/");
         }
     }

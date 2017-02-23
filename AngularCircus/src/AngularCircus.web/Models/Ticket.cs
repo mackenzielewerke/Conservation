@@ -10,6 +10,12 @@ namespace AngularCircus.web.Models
         public bool IsDone { get; set; }
         public Circus Circus { get; set; }
         public DateTime ShowDate { get; set; }
+
+        public Ticket()
+        {
+
+        }
+
         public Ticket(decimal price, string pricetype, string circus, DateTime showdate)
         {
             Circus.Name = circus;

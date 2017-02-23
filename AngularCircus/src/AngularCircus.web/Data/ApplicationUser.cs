@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using AngularCircus.web.Models;
 
 namespace AngularCircus.web.Data
 {
@@ -10,4 +13,5 @@ namespace AngularCircus.web.Data
     {
         public Guid Signature { get; set; }
     }
+
 }

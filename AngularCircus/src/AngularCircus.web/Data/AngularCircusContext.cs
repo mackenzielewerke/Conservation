@@ -8,41 +8,46 @@ using System.Threading.Tasks;
 
 namespace AngularCircus.web.Models
 {
-    public class AngularCircusContext : IdentityDbContext<ApplicationUser>
+    public class AngularCircusContext : IdentityDbContext
+
     {
         public DbSet<Circus> Circuses { get; set; }
         public DbSet<Performer> Performers { get; set; }
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Act> Acts { get; set; }
-        public DbSet<Possession> Possessions { get; set; }
 
-        public AngularCircusContext(DbContextOptions<AngularCircusContext> options) : base()
+        public AngularCircusContext()
+            : base()
         {
+
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=AngularCircus;Integrated Security=True");
             base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=AngularCircus;Integrated Security=True");
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<ApplicationUser>()
                 .ToTable("Users");
             builder.Entity<IdentityRole>()
-              .ToTable("Roles");
+                .ToTable("Roles");
             builder.Entity<IdentityRoleClaim<string>>()
                 .ToTable("RoleClaims");
             builder.Entity<IdentityUserClaim<string>>()
-             .ToTable("UserClaims");
+                .ToTable("UserClaims");
             builder.Entity<IdentityUserLogin<string>>()
-           .ToTable("UserLogins");
+                .ToTable("UserLogins");
             builder.Entity<IdentityUserRole<string>>()
-           .ToTable("UserRoles");
+                .ToTable("UserRoles");
             builder.Entity<IdentityUserToken<string>>()
-           .ToTable("UserTokens");
-
+                .ToTable("UserTokens");
         }
     }
 }
