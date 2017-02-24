@@ -38,7 +38,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return View();
         }
 
-        [HttpGet("~/api/circus/circus")]
+        [HttpGet("~/api/circus")]
         public IEnumerable<Circus> GetCircuses()
         {
             var userId = _userManager.GetUserId(User);
@@ -46,7 +46,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // GET api/circuses/5
-        [HttpGet("~/api/circus/circus/{id}")]
+        [HttpGet("~/api/circus/{id}")]
         public async Task<IActionResult> GetCircus(int id)
         {
             //if (!ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/circuses
-        [HttpPost("~/api/circus/circus")]
+        [HttpPost("~/api/circus")]
         public async Task<IActionResult> PostCircus([FromBody]Circus circus)
         {
             if (!ModelState.IsValid)
@@ -98,8 +98,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // PUT api/circuses/5
-        [HttpPut("~/api/circus/circus")]
-        public async Task<IActionResult> PutCircus([FromBody]int id, [FromBody] Circus circus)
+        [HttpPut("~/api/circus/{id}")]
+        public async Task<IActionResult> PutCircus(int id, [FromBody] Circus circus)
         {
             if (!ModelState.IsValid)
             {
@@ -135,8 +135,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/circus/circus")]
-        public async Task<IActionResult> DeleteCircus([FromRoute] int id)
+        [HttpDelete("~/api/circus/{id}")]
+        public async Task<IActionResult> DeleteCircus( int id)
         {
             if(!ModelState.IsValid)
             {

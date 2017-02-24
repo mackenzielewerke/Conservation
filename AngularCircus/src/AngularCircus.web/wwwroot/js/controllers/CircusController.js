@@ -15,7 +15,7 @@
 
         vm.Circus = [];
 
-        var promise = $http.get('api/circus');
+        var promise = $http.get('/api/circus');
 
         promise.then(function (result) {
             vm.Circus = result.data;
@@ -27,7 +27,7 @@
             var copy = angular.copy(circus);
             circus.name = '';
 
-            var promise = $http.post('api/circus', copy);
+            var promise = $http.post('/api/circus', copy);
             promise.then(function (result) {
                 vm.Circus.push(result.data)
             });
@@ -35,7 +35,7 @@
 
         vm.Remove = function (circus) {
 
-            var url = 'api/circus/{id}'.replace('{id}', circus.id);
+            var url = '/api/circus/{id}'.replace('{id}', circus.id);
 
             var promise = $http.delete(url);
             promise.then(function (result) {
