@@ -13,7 +13,6 @@ namespace AngularCircus.web.Models
             return (performer.ToString());
         }
 
-        public Animal Animal { get; set; }
 
 
         public Act()

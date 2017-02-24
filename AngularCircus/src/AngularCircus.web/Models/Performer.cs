@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Gender { get; set; }
         public bool IsDone { get; set; }
+        public string Species { get; set; }
 
         public Performer()
         {

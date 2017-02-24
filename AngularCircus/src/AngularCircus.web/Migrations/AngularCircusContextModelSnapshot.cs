@@ -21,35 +21,13 @@ namespace AngularCircus.web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AnimalId");
-
                     b.Property<bool>("IsDone");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AnimalId");
 
                     b.ToTable("Acts");
-                });
-
-            modelBuilder.Entity("AngularCircus.web.Models.Animal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Gender");
-
-                    b.Property<bool>("IsDone");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Species");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Animals");
                 });
 
             modelBuilder.Entity("AngularCircus.web.Models.Circus", b =>
@@ -78,6 +56,8 @@ namespace AngularCircus.web.Migrations
                     b.Property<bool>("IsDone");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Species");
 
                     b.HasKey("Id");
 
@@ -123,6 +103,7 @@ namespace AngularCircus.web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("Roles");
@@ -276,13 +257,6 @@ namespace AngularCircus.web.Migrations
                     b.ToTable("Users");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
-            modelBuilder.Entity("AngularCircus.web.Models.Act", b =>
-                {
-                    b.HasOne("AngularCircus.web.Models.Animal", "Animal")
-                        .WithMany()
-                        .HasForeignKey("AnimalId");
                 });
 
             modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>

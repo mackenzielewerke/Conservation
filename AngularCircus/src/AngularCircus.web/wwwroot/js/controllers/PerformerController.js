@@ -26,6 +26,7 @@
         vm.Add = function (performer) {
             var copy = angular.copy(performer);
             performer.name = '';
+            
 
             var promise = $http.post('api/performer', copy);
             promise.then(function (result) {

@@ -136,7 +136,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // DELETE api/circuses/5
         [HttpDelete("~/api/circus/{id}")]
-        public async Task<IActionResult> DeleteCircus( int id)
+        public async Task<IActionResult> DeleteCircus(int id)
         {
             if(!ModelState.IsValid)
             {
