@@ -158,7 +158,6 @@ namespace AngularCircus.web.Controllers.ApiControllers
             await _context.SaveChangesAsync();
 
             return Ok(circus);
-
         }
         
         private bool CircusExists(int id)

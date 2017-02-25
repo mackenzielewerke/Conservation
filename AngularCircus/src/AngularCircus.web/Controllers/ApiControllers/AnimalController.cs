@@ -43,7 +43,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return _context.Animals.Where(q => q.Name == userId).ToList();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("~/animals/{id}")]
         public async Task<IActionResult> GetAnimals([FromRoute] int id)
         {
             if (!ModelState.IsValid)

@@ -44,7 +44,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return _context.Performers.Where(q => q.Name == userId).ToList();
         }
         // GET api/performers/5
-        [HttpGet("{id}")]
+        [HttpGet("~/performers/{id}")]
         public async Task<IActionResult> GetPerformer([FromRoute] int id)
         {
             if (!ModelState.IsValid)

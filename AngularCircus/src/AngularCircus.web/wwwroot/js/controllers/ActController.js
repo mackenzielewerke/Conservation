@@ -15,7 +15,7 @@
 
         vm.Act = [];
 
-        var promise = $http.get('api/act');
+        var promise = $http.get('/api/act');
 
         promise.then(function (result) {
             vm.Act = result.data;
@@ -28,7 +28,7 @@
             act.name = '';
             
 
-            var promise = $http.post('api/act', copy);
+            var promise = $http.post('/api/act', copy);
             promise.then(function (result) {
                 vm.Act.push(result.data);
             }, function (result) {
@@ -37,7 +37,7 @@
 
         vm.Remove = function (act) {
 
-            var url = 'api/act/{id}'.replace('{id}', act.id);
+            var url = '/api/act/{id}'.replace('{id}', act.id);
 
             var promise = $http.delete(url);
             promise.then(function (result) {

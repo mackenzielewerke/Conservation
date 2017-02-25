@@ -27,6 +27,8 @@ namespace AngularCircus.web.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Owner");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalId");
@@ -79,6 +81,8 @@ namespace AngularCircus.web.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Owner");
+
                     b.HasKey("Id");
 
                     b.ToTable("Performers");
@@ -123,6 +127,7 @@ namespace AngularCircus.web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
+                        .IsUnique()
                         .HasName("RoleNameIndex");
 
                     b.ToTable("Roles");

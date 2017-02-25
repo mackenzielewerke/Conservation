@@ -4,6 +4,7 @@ namespace AngularCircus.web.Models
     public class Act
     {
         public int Id { get; set; }
+        public string Owner { get; set; }
         public string Name { get; set; }
         public bool IsDone { get; set; }
 
@@ -12,9 +13,6 @@ namespace AngularCircus.web.Models
             var performer = new Performer();
             return (performer.ToString());
         }
-
-        public Animal Animal { get; set; }
-
 
         public Act()
         {

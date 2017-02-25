@@ -1,7 +1,7 @@
 ﻿body {
      padding-top: 50px;
      padding-bottom: 20px;
-     font-family: "AR BONNIE", AR, serif;
+     font-family: 'Bahiana', cursive;
      font-size: 30px;
      height: 100%;
 }
@@ -18,7 +18,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-     background-image: url(../images/img-thing.jpg);
+     background-image: url(../images/CircusBG.jpeg);
      background-size: cover;
      background-color: darkgoldenrod;
      background-repeat:no-repeat;
@@ -26,14 +26,13 @@
      border-color:darkred;
      display: compact;
      min-height: 100%;
-
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
 input,
 select,
 textarea {
-    max-width: 280px;
+
 }
 
 /* Carousel */

@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
-    [Route("api/act")]
+   // [Route("~/act")]
     [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
     public class ActController : Controller
     {
@@ -30,28 +30,30 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         [Route("~/act")]
-        public IActionResult Index()
+        public IActionResult Act()
         {
             return View();
         }
-        [HttpGet]
+
+        [HttpGet("~/api/act")]
         public IEnumerable<Act> GetActs()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Where(q => q.Name == userId).ToList();
+            return _context.Acts.Where(q => q.Owner == userId).ToList();
         }
+
         // GET api/acts/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetAct([FromRoute] int id)
+        [HttpGet("api/act/{id}")]
+        public async Task<IActionResult> GetAct(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
             var userId = _userManager.GetUserId(User);
             Act act = await _context.Acts
-                .SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+                .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
 
             if (act == null)
             {
@@ -64,7 +66,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/acts
-        [HttpPost]
+        [HttpPost("~/api/act")]
         public async Task<IActionResult> PostAct ([FromBody]Act act)
         {
             if (!ModelState.IsValid)
@@ -72,7 +74,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
                 return BadRequest(ModelState);
             }
 
-            act.Name = _userManager.GetUserId(User);
+            act.Owner = _userManager.GetUserId(User);
             _context.Acts.Add(act);
             try
             {
@@ -93,8 +95,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // PUT api/acts/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAct([FromBody]int id, [FromBody] Act act)
+        [HttpPut("~/api/act/{id}")]
+        public async Task<IActionResult> PutAct(int id, [FromBody] Act act)
         {
             if (!ModelState.IsValid)
             {
@@ -106,7 +108,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
                 return BadRequest();
             }
 
-            act.Name = _userManager.GetUserId(User);
+            act.Owner = _userManager.GetUserId(User);
             _context.Entry(act).State = EntityState.Modified;
 
             try
@@ -130,8 +132,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAct([FromRoute] int id)
+        [HttpDelete("~/api/act/{id}")]
+        public async Task<IActionResult> DeleteAct(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -141,7 +143,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             var userId = _userManager.GetUserId(User);
 
             Act act = await _context.Acts
-                .Where(q => q.Name == userId)
+                .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
             if (act == null)
@@ -159,7 +161,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         private bool ActExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Any(e => e.Name == userId && e.Id == id);
+            return _context.Acts.Any(e => e.Owner== userId && e.Id == id);
         }
     }
 }
