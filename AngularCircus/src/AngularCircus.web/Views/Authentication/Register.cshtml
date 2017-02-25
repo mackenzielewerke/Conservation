@@ -7,8 +7,11 @@
     <div class="well" style="background-color:palegoldenrod">
         <form ng-submit="auc.Register(user)">
 
-            <div class="panel panel-default">
-                <div class="panel-body" ng-init="user = {}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Register
+            </div>
+            <div class="panel-body" ng-init="user = {}">
 
                     <div class="form-group">
                         <input type="text" name="Email" placeholder="Email" class="form-control" ng-model="user.email" />

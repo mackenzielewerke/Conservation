@@ -13,7 +13,6 @@ namespace AngularCircus.web.Models
     {
         public DbSet<Circus> Circuses { get; set; }
         public DbSet<Performer> Performers { get; set; }
-        public DbSet<Animal> Animals { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Act> Acts { get; set; }
 
