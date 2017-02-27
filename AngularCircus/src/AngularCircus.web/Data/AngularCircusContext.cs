@@ -47,6 +47,9 @@ namespace AngularCircus.web.Models
                 .ToTable("UserRoles");
             builder.Entity<IdentityUserToken<string>>()
                 .ToTable("UserTokens");
+            builder.Entity<Act>()
+                .HasOne(p => p.Circus)
+                .WithMany(b => b.Acts);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace AngularCircus.web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CircusId");
+
                     b.Property<bool>("IsDone");
 
                     b.Property<string>("Name");
@@ -28,6 +30,8 @@ namespace AngularCircus.web.Migrations
                     b.Property<string>("Owner");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CircusId");
 
                     b.ToTable("Acts");
                 });
@@ -60,6 +64,8 @@ namespace AngularCircus.web.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("Owner");
+
+                    b.Property<string>("Species");
 
                     b.HasKey("Id");
 
@@ -259,6 +265,13 @@ namespace AngularCircus.web.Migrations
                     b.ToTable("Users");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("AngularCircus.web.Models.Act", b =>
+                {
+                    b.HasOne("AngularCircus.web.Models.Circus", "Circus")
+                        .WithMany("Acts")
+                        .HasForeignKey("CircusId");
                 });
 
             modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>

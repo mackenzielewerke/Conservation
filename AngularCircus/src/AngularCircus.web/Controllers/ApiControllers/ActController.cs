@@ -10,12 +10,13 @@ using AngularCircus.web.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using AngularCircus.web.Controllers.ApiControllers;
+
 
 namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
-   // [Route("~/act")]
-    [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+    // [Route("~/act")]
     public class ActController : Controller
     {
         private readonly AngularCircusContext _context;
@@ -29,6 +30,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
             _context = context;
         }
 
+
+
         [Route("~/act")]
         public IActionResult Act()
         {
@@ -39,21 +42,23 @@ namespace AngularCircus.web.Controllers.ApiControllers
         public IEnumerable<Act> GetActs()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Where(q => q.Owner == userId).ToList();
+
+            return _context.Acts
+                .Where(q => q.Circus.Owner == userId).ToList();
         }
 
         // GET api/acts/5
         [HttpGet("api/act/{id}")]
         public async Task<IActionResult> GetAct(int id)
         {
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            //    if (!ModelState.IsValid)
+            //    {
+            //        return BadRequest(ModelState);
+            //    }
 
             var userId = _userManager.GetUserId(User);
             Act act = await _context.Acts
-                .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
+                .SingleOrDefaultAsync(m => m.Circus.Owner == userId && m.Circus.Id == m.Id);
 
             if (act == null)
             {
@@ -67,7 +72,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // POST api/acts
         [HttpPost("~/api/act")]
-        public async Task<IActionResult> PostAct ([FromBody]Act act)
+        public async Task<IActionResult> PostAct([FromBody]Act act)
         {
             if (!ModelState.IsValid)
             {
@@ -143,8 +148,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
             var userId = _userManager.GetUserId(User);
 
             Act act = await _context.Acts
-                .Where(q => q.Owner == userId)
-                .SingleOrDefaultAsync(m => m.Id == id);
+                .Where(q => q.Circus.Owner == userId)
+                .SingleOrDefaultAsync(m => m.Circus.Id == m.Id);
 
             if (act == null)
             {
@@ -161,7 +166,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         private bool ActExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Any(e => e.Owner== userId && e.Id == id);
+            return _context.Acts.Any(e => e.Owner == userId && e.Id == id);
         }
     }
 }
