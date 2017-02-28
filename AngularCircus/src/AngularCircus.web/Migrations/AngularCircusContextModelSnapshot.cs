@@ -21,7 +21,7 @@ namespace AngularCircus.web.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CircusId");
+                    b.Property<int>("CircusId");
 
                     b.Property<bool>("IsDone");
 
@@ -271,7 +271,8 @@ namespace AngularCircus.web.Migrations
                 {
                     b.HasOne("AngularCircus.web.Models.Circus", "Circus")
                         .WithMany("Acts")
-                        .HasForeignKey("CircusId");
+                        .HasForeignKey("CircusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>
