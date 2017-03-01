@@ -23,12 +23,14 @@
             console.log(result)
         });
 
-        vm.Add = function (act) {
+        vm.Add = function (circusId, act) {
             var copy = angular.copy(act);
+
+
             act.name = '';
             
 
-            var promise = $http.post('/api/act', copy);
+            var promise = $http.post('/api/circuses/'+ circusId + '/acts', copy);
             promise.then(function (result) {
                 vm.Act.push(result.data);
             }, function (result) {

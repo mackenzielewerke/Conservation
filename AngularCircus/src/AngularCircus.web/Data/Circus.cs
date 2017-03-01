@@ -13,7 +13,7 @@ namespace AngularCircus.web.Models
         public List<Act> Acts { get; set; }
         public Circus()
         {
-
+            Acts = new List<Act>();
         }
     }
 }

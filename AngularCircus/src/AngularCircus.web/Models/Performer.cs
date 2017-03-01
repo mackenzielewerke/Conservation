@@ -9,8 +9,10 @@
         public bool IsDone { get; set; }
         public string Species { get; set; }
 
+        
         public Performer()
         {
+
         }
     }
 }
