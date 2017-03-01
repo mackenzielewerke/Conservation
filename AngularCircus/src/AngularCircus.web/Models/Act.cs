@@ -8,7 +8,6 @@ namespace AngularCircus.web.Models
         public string Name { get; set; }
         public bool IsDone { get; set; }
 
-        public int CircusId { get; set; }
         public Circus Circus { get; set; }
         public string Performer()
         {
@@ -18,7 +17,8 @@ namespace AngularCircus.web.Models
 
         public Act()
         {
-
+           
         }
+
     }
 }

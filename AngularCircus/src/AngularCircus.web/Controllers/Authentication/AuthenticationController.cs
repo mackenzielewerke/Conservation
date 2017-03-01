@@ -33,7 +33,7 @@ namespace AngularCircus.web.Controllers.Authentication
         }
 
         [AllowAnonymous]
-        [HttpPost("~/api/authentication/login")]
+        [HttpPost("~/authentication/login")]
         public async Task<IActionResult> Login([FromBody]LoginRequest model)
         {
             var user = await UserManager.FindByEmailAsync(model.Email);
@@ -70,7 +70,7 @@ namespace AngularCircus.web.Controllers.Authentication
         }
 
         [AllowAnonymous]
-        [HttpPost("~/api/authentication/register")]
+        [HttpPost("~/authentication/register")]
         public async Task<IActionResult> Register([FromBody]RegisterRequest model)
         {
             var user = new ApplicationUser();

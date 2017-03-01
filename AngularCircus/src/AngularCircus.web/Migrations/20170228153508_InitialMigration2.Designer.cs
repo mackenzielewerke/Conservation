@@ -8,9 +8,10 @@ using AngularCircus.web.Models;
 namespace AngularCircus.web.Migrations
 {
     [DbContext(typeof(AngularCircusContext))]
-    partial class AngularCircusContextModelSnapshot : ModelSnapshot
+    [Migration("20170228153508_InitialMigration2")]
+    partial class InitialMigration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
