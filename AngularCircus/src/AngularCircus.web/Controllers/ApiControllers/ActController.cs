@@ -33,10 +33,11 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
 
-        [Route("~/act")]
-        public IActionResult Act()
+        [Route("~/circuses/{id}/acts")]
+        public IActionResult Act(int id)
         {
-            return View();
+            var circus = _context.Circuses.Include(q => q.Acts).FirstOrDefault(m => m.Id == id);
+            return View(circus);
         }
 
         [HttpGet("~/api/act")]
@@ -72,20 +73,20 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/acts
-        [HttpPost("~/api/act")]
-        public async Task<IActionResult> PostAct([FromBody]Act act)
+        [HttpPost("~/api/circuses/{id}/acts")]
+        public async Task<IActionResult> PostAct(int id, [FromBody]Act act)
         {
-          
+
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            var circus = _context.Circuses.Find(id);
             act.Owner = _userManager.GetUserId(User);
-            _context.Acts.Add(act);
-          
-            await _context.SaveChangesAsync();
+
+            circus.Acts.Add(act);
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -101,7 +102,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
                     throw;
                 }
             }
-            var fixActs = _context.Database.ExecuteSqlCommand("update Acts set Acts.CircusId = C.Id from Acts as A inner join Circuses as C on C.Owner = A.Owner");
+            //var fixActs = _context.Database.ExecuteSqlCommand("update Acts set Acts.CircusId = C.Id from Acts as A inner join Circuses as C on C.Owner = A.Owner");
             return CreatedAtAction("GetAct", new { id = act.Id }, act);
 
         }

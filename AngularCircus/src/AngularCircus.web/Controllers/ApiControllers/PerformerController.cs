@@ -29,7 +29,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             _context = context;
         }
 
-        [Route("~/performer")]
+        [Route("~/performer/")]
         [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Index()
         {

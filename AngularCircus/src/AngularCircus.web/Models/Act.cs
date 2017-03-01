@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace AngularCircus.web.Models
 {
     public class Act
@@ -9,15 +11,17 @@ namespace AngularCircus.web.Models
         public bool IsDone { get; set; }
 
         public Circus Circus { get; set; }
-        public string Performer()
-        {
-            var performer = new Performer();
-            return (performer.ToString());
-        }
+        //public string Performer()
+        //{
+        //    var performer = new Performer();
+        //    return (performer.ToString());
+        //}
 
+
+        public List<Performer> Performers { get; set; }
         public Act()
         {
-           
+            Performers = new List<Performer>();
         }
 
     }

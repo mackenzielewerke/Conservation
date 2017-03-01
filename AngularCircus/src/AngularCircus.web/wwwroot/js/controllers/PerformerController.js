@@ -23,12 +23,12 @@
             console.log(result);
         });
 
-        vm.Add = function (performer) {
+        vm.Add = function (actId, performer) {
             var copy = angular.copy(performer);
             performer.name = '';
             
 
-            var promise = $http.post('api/performer', copy);
+            var promise = $http.post('/api/circuses/acts/'+ actId + '/performers', copy);
             promise.then(function (result) {
                 vm.Performer.push(result.data);
             }, function (result) {
