@@ -18,7 +18,7 @@ namespace AngularCircus.web.Models
         //}
 
 
-        public List<Performer> Performers { get; set; }
+        public virtual List<Performer> Performers { get; set; }
         public Act()
         {
             Performers = new List<Performer>();

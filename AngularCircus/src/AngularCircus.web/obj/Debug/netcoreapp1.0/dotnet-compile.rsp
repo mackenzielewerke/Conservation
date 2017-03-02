@@ -214,9 +214,9 @@
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Program.cs
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Startup.cs
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\HomeController.cs
-C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\ActController.cs
-C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\CircusController.cs
-C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\PerformerController.cs
+C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\ActsController.cs
+C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\CircusesController.cs
+C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\ApiControllers\PerformersController.cs
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Controllers\Authentication\AuthenticationController.cs
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Data\AngularCircusContext.cs
 C:\Users\Kyle\Desktop\two\two\AngularCircus\src\AngularCircus.web\Data\ApplicationUser.cs
