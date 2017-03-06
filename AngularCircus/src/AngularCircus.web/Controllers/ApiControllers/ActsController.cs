@@ -72,9 +72,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // POST api/acts
         [HttpPost("~/api/circuses/{circusId}/acts")]
-        public async Task<IActionResult> PostAct(int id, [FromBody]Act act)
+        public async Task<IActionResult> PostAct(int circusId, [FromBody]Act act)
         {
-            var circus = _context.Circuses.FirstOrDefault(q => q.Id == id);
+            var circus = _context.Circuses.FirstOrDefault(q => q.Id == circusId);
 
             if (!ModelState.IsValid)
             {
@@ -143,7 +143,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/circuses/{circusId}/acts/{id}")]
+        [HttpDelete("~/api/acts/{id}")]
         public async Task<IActionResult> DeleteAct(int id)
         {
             if (!ModelState.IsValid)
@@ -154,8 +154,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
             var userId = _userManager.GetUserId(User);
 
             Act act = await _context.Acts
-                .Where(q => q.Circus.Owner == userId)
-                .SingleOrDefaultAsync(m => m.Circus.Id == m.Id);
+                .Where(q => q.Owner == userId)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (act == null)
             {
