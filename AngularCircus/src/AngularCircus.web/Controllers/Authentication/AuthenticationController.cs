@@ -44,7 +44,9 @@ namespace AngularCircus.web.Controllers.Authentication
 
                 if (result.Succeeded)
                 {
+                    Redirect("~/circuses");
                     return Ok(result.Succeeded);
+
                 }
                 else if (result.IsLockedOut)
                 {
@@ -82,6 +84,7 @@ namespace AngularCircus.web.Controllers.Authentication
             if(result.Succeeded)
             {
                 await SignInManager.PasswordSignInAsync(user, model.Password, false, false);
+                Redirect("~/");
                 return Ok(result.Succeeded);
             }
             else
