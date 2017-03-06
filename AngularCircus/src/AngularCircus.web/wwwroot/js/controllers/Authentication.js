@@ -15,7 +15,7 @@
         vm.Authentication = [];
 
         vm.Register = function (model) {
-            var promise = $http.post('/api/authentication/register', model);
+            var promise = $http.post('/authentication/register', model);
             promise.then(function (result) {
                 $location.path('/');
             }, function (result) {
@@ -24,7 +24,7 @@
         };
 
         vm.Login = function (model) {
-            var promise = $http.post('/api/authentication/login', model);
+            var promise = $http.post('/authentication/login', model);
             promise.then(function (result) {
                 $location.path('/');
             }, function (result) {

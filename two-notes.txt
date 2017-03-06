@@ -1,0 +1,56 @@
+Overall:
+Pluralize all controllers
+Clean up project.  But make sure to alert other teammates and stop all work before you do.  
+
+
+CircusesController
+19 Dont mix route prefixes and routes
+24 Context is never used and ever instantiated.  
+35 ~/circuses
+41
+49
+
+
+ActsController
+
+25 Context is never used.  
+26 Circus is never used.  Remove it.  
+36 Route needs to make sure the circus exists.  ~/circuses/{id}/acts 
+    Then find the circus by the {id}.
+The above applies to all methods within the act controller.  
+
+PerformersController
+
+39 ~/api/circuses/{circusId}/acts/{actId}/performers
+Needs act ids and circus ids to pull down correct performers.  
+
+
+
+Data model issues.  
+
+Anything that is in the database should go into the Data folder instead of the Models folder.  
+
+Circus IsDone?
+
+
+Act doesnt need an owner because a circus dictates the ownership.
+Performer doesnt need owner because 
+Act model line 12 Performer method.  
+Act IsDone should probably be a Start and End DateTime.  
+Act doesnt have a List<Performer> 
+
+
+Performer and Animals should be seperate.  User interface design is going to be an issue here.  Users are not going to know that they can put in an animal where they would normal put in a persons name.  
+
+
+Ticket constructor with overrides is no good.  
+ShowDate should be rethought.  A circus should contain a list of Shows.  
+
+CSS - try to reduce the use of style attribute in html.  Use classes instead.  
+
+
+Circus.cshtml
+
+Line 4 Script is bad juju.  Use @script { } instead. 
+Separate the user interface.
+

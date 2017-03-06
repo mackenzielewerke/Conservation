@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-sm-4">
                             <button class="btn btn-danger" ng-click="crc.Remove(circus)"> Remove</button>
-                            <a href="~/act" button type="button" class="btn btn-success">Continue</a>
+                            <a href="~/circuses/{{circus.id}}/acts" button type="button" class="btn btn-success">Continue</a>
                         </div>
                     </li>
 
@@ -41,86 +41,3 @@
 </div>
     </div>
 
-@*<div class="row" ng-cloak ng-controller="PerformerController as prc">
-    <script src="~/js/controllers/PerformerController.js"></script>
-    <div class="col-sm-4 col-sm-offset-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-
-                <h3 class="panel-title"> Performer  |   Gender</h3>
-            </div>
-
-            <ol class="list-group">
-
-                <li class="list-group-item clearfix" ng-repeat="performer in prc.Performer">
-                    <div class="col-sm-8">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="performer.IsDone" ng-true-value="true" ng-false-value="false" />
-                                {{performer.name}} | {{performer.gender}}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <button class="btn btn-danger" ng-click="prc.Remove(performer)"> Remove</button>
-                    </div>
-                </li>
-
-                <li class="list-group-item clearfix" ng-init="performer = {}">
-                    <div class="col-sm-8">
-                        <label> New Performer</label>
-                        <div class="form-group clearfix">
-                            <input type="text" class="form-control" placeholder="Name" ng-model="performer.name" />
-                            <input type="text" class="form-control clearfix" placeholder="Sex" ng-model="performer.gender" />
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="prc.Add(performer)" ng-keydown="$event.which === 13 && prc.Add(performer)">Add</button>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </div>
-</div>*@
-
-@*<div class="row" ng-cloak ng-controller="ActController as aTc">
-    <script src="~/js/controllers/ActController.js"></script>
-    <div class="col-sm-4 col-sm-offset-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-
-                <h3 class="panel-title"> Act </h3>
-            </div>
-            <ol class="list-group">
-
-                <li class="list-group-item clearfix" ng-repeat="act in aTc.Act">
-                    <div class="col-sm-8">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" ng-model="act.IsDone" ng-true-value="true" ng-false-value="false" />
-                                {{act.name}}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <button class="btn btn-danger" ng-click="aTc.Remove(act)"> Remove</button>
-                    </div>
-                </li>
-
-                <li class="list-group-item clearfix" ng-init="act = {}">
-                    <div class="col-sm-8">
-                        <label> New Act</label>
-                        <div class="form-group clearfix">
-                            <input type="text" class="form-control" placeholder="Name" ng-model="act.name" />
-                            <input type="text" class="form-control" placeholder="Performer" ng-model="act.performer" />
-                            <input type="text" class="form-control clearfix" placeholder="Animal" ng-model="act.animal" />
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <button type="button" class="btn btn-primary" ng-click="aTc.Add(act)" ng-keydown="$event.which === 13 && aTc.Add(act)">Add</button>
-                    </div>
-                </li>
-            </ol>
-        </div>
-    </div>
-</div>*@
