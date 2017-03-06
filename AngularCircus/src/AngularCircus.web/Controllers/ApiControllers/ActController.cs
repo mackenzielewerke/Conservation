@@ -86,7 +86,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             act.Owner = _userManager.GetUserId(User);
 
             circus.Acts.Add(act);
-
+            _context.Acts.Add(act);
             try
             {
                 await _context.SaveChangesAsync();
@@ -104,10 +104,10 @@ namespace AngularCircus.web.Controllers.ApiControllers
             }
             //var fixActs = _context.Database.ExecuteSqlCommand("update Acts set Acts.CircusId = C.Id from Acts as A inner join Circuses as C on C.Owner = A.Owner");
             return CreatedAtAction("GetAct", new { id = act.Id }, act);
-            _context.Acts.Add(act);
+
             act.Owner = _userManager.GetUserId(User);           
 
-            return Ok(model);
+            return Ok(act);
 
         }
 
