@@ -11,12 +11,6 @@ namespace AngularCircus.web.Models
         public bool IsDone { get; set; }
 
         public Circus Circus { get; set; }
-        //public string Performer()
-        //{
-        //    var performer = new Performer();
-        //    return (performer.ToString());
-        //}
-
 
         public virtual List<Performer> Performers { get; set; }
         public Act()
