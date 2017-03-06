@@ -75,26 +75,28 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // POST api/acts
         [HttpPost("~/api/act")]
-        public async Task<IActionResult> PostAct([FromBody]string name)
+        public async Task<IActionResult> PostAct([FromBody] ActRequest model)
         {
-            var act = _context.Acts.FirstOrDefault(a => a.Name == name);
+            _context.Acts
+                .Include(b => b.Circus)
+                .FirstOrDefault(a => a.CircusId == a.Id && a.Name == model.Name);
 
-            if (act != null)
-            {
-                return BadRequest("Act with name " + name + " already exists. ");
-            }
 
-            act = new Act()
+            //if (act != null)
+            //{
+            //    return BadRequest("Act with name " + name + " already exists. ");
+            //}
+
+            var act = new Act()
             {
-                Name = name
+                Name = model.Name
             };
-
-            act.Owner = _userManager.GetUserId(User);
-            //act.CircusId = _context.Circuses.FirstOrDefaultAsync()
             _context.Acts.Add(act);
-            
+            act.Owner = _userManager.GetUserId(User);           
+
             await _context.SaveChangesAsync();
-            return Ok(name);
+
+            return Ok(model);
 
         }
 

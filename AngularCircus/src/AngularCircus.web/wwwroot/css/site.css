@@ -13,27 +13,28 @@
 
  }*/
 
+
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-     background-image: url(../images/CircusBG.jpeg);
+     background-image: url(../images/newabstract.jpg);
      background-size: cover;
-     background-color: darkgoldenrod;
      background-repeat:no-repeat;
-     border: groove;
-     border-color:darkred;
+     border-top: groove;
+     border-top-color:beige;
      display: compact;
      min-height: 100%;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
-input,
+/*input,
 select,
 textarea {
 
-}
+}*/
 
 /* Carousel */
 .carousel-caption p {

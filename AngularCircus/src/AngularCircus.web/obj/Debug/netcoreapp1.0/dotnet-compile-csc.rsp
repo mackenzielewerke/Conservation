@@ -221,6 +221,7 @@
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Migrations\20170227232144_InitialMigration.Designer.cs"
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Migrations\AngularCircusContextModelSnapshot.cs"
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Models\Act.cs"
+"C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Models\ActRequest.cs"
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Models\LoginRequest.cs"
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Models\Performer.cs"
 "C:\Users\Mackenzie Jo\Desktop\two\AngularCircus\src\AngularCircus.web\Models\RegisterRequest.cs"

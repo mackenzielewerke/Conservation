@@ -27,7 +27,7 @@
             var copy = angular.copy(act);
             act.name = '';
             
-
+            var url = '/api/circus/' + circusId + '/acts';
             var promise = $http.post('/api/act', copy);
             promise.then(function (result) {
                 vm.Act.push(result.data);
