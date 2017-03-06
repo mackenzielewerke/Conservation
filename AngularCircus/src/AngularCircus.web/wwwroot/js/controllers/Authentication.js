@@ -28,7 +28,7 @@
             promise.then(function (result) {
                 $location.path('/');
             }, function (result) {
-                console.log(result)
+                console.log(result);
             });
         };
 
