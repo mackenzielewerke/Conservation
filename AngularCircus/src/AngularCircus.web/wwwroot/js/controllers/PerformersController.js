@@ -4,18 +4,19 @@
 
     var application = angular.module('Application');
 
-    var controller = application.controller('PerformerController', PerformerController);
+    var controller = application.controller('PerformersController', PerformersController);
 
-    PerformerController.$inject = ['$http'];
+    PerformersController.$inject = ['$http'];
 
-    function PerformerController($http) {
+    function PerformersController($http) {
         var vm = this;
 
         var count = 0;
 
         vm.Performer = [];
+        vm.act = [];
 
-        var promise = $http.get('api/circuses/' + circusId + '/acts/' + actId + '/performers');
+        var promise = $http.get('api/acts/' + vm.act.id + '/performers');
 
         promise.then(function (result) {
             vm.Performer = result.data;
@@ -28,7 +29,7 @@
             performer.name = '';
             
 
-            var promise = $http.post('/api/circuses/acts/'+ actId + '/performers', copy);
+            var promise = $http.post('api/acts/'+ actId + '/performers', copy);
             promise.then(function (result) {
                 vm.Performer.push(result.data);
             }, function (result) {

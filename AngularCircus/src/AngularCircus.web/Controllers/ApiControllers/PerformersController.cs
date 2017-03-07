@@ -21,7 +21,6 @@ namespace AngularCircus.web.Controllers.ApiControllers
         private readonly AngularCircusContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
-        public AngularCircusContext Context { get; set; }
 
         public PerformersController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
@@ -29,54 +28,61 @@ namespace AngularCircus.web.Controllers.ApiControllers
             _context = context;
         }
 
-        [Route("~/api/circuses/{circusId}/acts/{actId}/performers/")]
+        [Route("~/acts/{id}/performers/")]
         //[Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
-        public IActionResult Index()
+        public IActionResult Performer(int id)
         {
-            return View();
+
+            var act = _context.Acts.Include(q => q.Performers).FirstOrDefault(m => m.Id == id);
+            return View(act);
         }
 
-        [Route("~/api/performers")]
+        [Route("~/acts/{actId}/performers")]
         [HttpGet]
         public IEnumerable<Performer> GetPerformers()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Performers.Where(q => q.Name == userId).ToList();
+            return _context.Performers.Where(q => q.Act.Owner == userId).ToList(); //this act.Owner may be a problem
         }
         // GET api/performers/5
-        [HttpGet("~/performers/{id}")]
-        public async Task<IActionResult> GetPerformer([FromRoute] int id)
+        [HttpGet("~/acts/{actId}/performers/{id}")]
+        public async Task<IActionResult> GetPerformer(int actId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            
 
             var userId = _userManager.GetUserId(User);
-            Performer Performer = await _context.Performers
-                .SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+            var act = _context.Acts.Include(q => q.Performers).FirstOrDefault(q => q.Id == actId);
 
-            if (Performer == null)
+            var performer = act.Performers.FirstOrDefault(q => q.Id == actId);
+            //Performer Performer = await _context.Performers.SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+
+            if (performer == null)
             {
                 return NotFound();
             }
 
-            return Ok(Performer);
+            return Ok(performer);
         }
 
 
 
         // POST api/performers
-        [HttpPost]
-        public async Task<IActionResult> PostPerformer([FromBody]Performer performer)
+        [HttpPost("~/acts/{actId}/performers")]
+        public async Task<IActionResult> PostPerformer(int actId, [FromBody]Performer performer)
         {
+            var act = _context.Acts.FirstOrDefault(q => q.Id == actId);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            performer.Name = _userManager.GetUserId(User);
-            _context.Performers.Add(performer);
+            performer.Owner = _userManager.GetUserId(User);
+
+            //performer.Name = _userManager.GetUserId(User);
+            //_context.Performers.Add(performer);
+
+            act.Performers.Add(performer);
             try
             {
                 await _context.SaveChangesAsync();
@@ -96,8 +102,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // PUT api/performers/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerformer([FromBody]int id, [FromBody] Performer performer)
+        [HttpPut("~/acts/{actId}/performers{id}")]
+        public async Task<IActionResult> PutPerformer(int id, [FromBody] Performer performer)
         {
             if (!ModelState.IsValid)
             {
@@ -109,7 +115,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
                 return BadRequest();
             }
 
-            performer.Name = _userManager.GetUserId(User);
+            performer.Owner = _userManager.GetUserId(User);
             _context.Entry(performer).State = EntityState.Modified;
 
             try
@@ -133,7 +139,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/performers/5
-        [HttpDelete("{id}")]
+        [HttpDelete("~/api/performers/{id}")]
         public async Task<IActionResult> DeletePerformer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -144,7 +150,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             var userId = _userManager.GetUserId(User);
 
             Performer Performer = await _context.Performers
-                .Where(q => q.Name == userId)
+                .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
             if (Performer == null)

@@ -45,8 +45,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             var userId = _userManager.GetUserId(User);
             
 
-            return _context.Acts
-                .Where(q => q.Circus.Owner == userId).ToList();
+            return _context.Acts.Where(q => q.Circus.Owner == userId).ToList();
         }
 
         // GET api/acts/5
