@@ -14,7 +14,7 @@
         vm.Act = [];
         vm.circus = [];
 
-        var promise = $http.get('/api/circuses/' + vm.circus.id + '/acts');
+        var promise = $http.get('/api/circuses/' + vm.circus.id + '/acts'); //this was circusId instead of vm.circus
 
         promise.then(function (result) {
             vm.Act = result.data;
@@ -25,9 +25,9 @@
         vm.Add = function (circusId, act) {
             var copy = angular.copy(act);
             act.name = '';
-            
 
-            var promise = $http.post('/api/circuses/' + circusId + '/acts', copy); 
+
+            var promise = $http.post('/api/circuses/' + circusId + '/acts', copy); //SPencer didn't have .id here for his
             promise.then(function (result) {
                 vm.Act.push(result.data);
             }, function (result) {
@@ -38,10 +38,11 @@
             
             var url = '/api/circuses/{circusId}/acts/{id}'.replace('{circusId}', circusId);
                 
+            
+
 
             var promise = $http.delete(url);
             promise.then(function (result) {
-
 
                 var index = vm.Act.indexOf(act);
                 vm.Act.splice(index, 1);

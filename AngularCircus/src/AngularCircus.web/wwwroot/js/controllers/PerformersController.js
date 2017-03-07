@@ -15,7 +15,7 @@
 
         vm.Performer = [];
 
-        var promise = $http.get('api/performers');
+        var promise = $http.get('api/circuses/' + circusId + '/acts/' + actId + '/performers');
 
         promise.then(function (result) {
             vm.Performer = result.data;
