@@ -29,8 +29,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
             _context = context;
         }
 
-        [Route("~/performer/")]
-        [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+        [Route("~/api/circuses/{circusId}/acts/{actId}/performers/")]
+        //[Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Index()
         {
             return View();

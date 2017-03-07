@@ -84,7 +84,6 @@ namespace AngularCircus.web.Controllers.Authentication
             if(result.Succeeded)
             {
                 await SignInManager.PasswordSignInAsync(user, model.Password, false, false);
-                Redirect("~/");
                 return Ok(result.Succeeded);
             }
             else

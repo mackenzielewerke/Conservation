@@ -22,7 +22,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         private readonly AngularCircusContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
-        //public Circus Circus { get; set; }
+        
 
         public ActsController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {
@@ -39,34 +39,33 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return View(circus);
         }
 
-        [HttpGet("~/api/circuses/{circusId}/act")]
+        [HttpGet("~/api/circuses/{circusId}/acts")]
         public IEnumerable<Act> GetActs()
         {
             var userId = _userManager.GetUserId(User);
+            
 
             return _context.Acts
                 .Where(q => q.Circus.Owner == userId).ToList();
         }
 
         // GET api/acts/5
-        [HttpGet("api/circuses/{circusId}/act/{id}")]
-        public async Task<IActionResult> GetAct(int circusId)
+        [HttpGet("api/circuses/{circusId}/acts/{id}")]
+        public async Task<IActionResult> GetAct(int circusId, int id)
         {
-            //    if (!ModelState.IsValid)
-            //    {
-            //        return BadRequest(ModelState);
-            //    }
+            
 
             var userId = _userManager.GetUserId(User);
 
             var circus = _context.Circuses.Include(q => q.Acts).FirstOrDefault(q => q.Id == circusId);
-            var act = circus.Acts.FirstOrDefault(q => q.Id == circusId);
+            var act = circus.Acts.FirstOrDefault(q => q.Id == id);
 
             if (act == null)
             {
                 return NotFound();
             }
 
+            await _context.SaveChangesAsync();
             return Ok(act);
         }
 
@@ -74,19 +73,20 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         // POST api/acts
         [HttpPost("~/api/circuses/{circusId}/acts")]
-        public async Task<IActionResult> PostAct(int id, [FromBody]Act act)
+        public async Task<IActionResult> PostAct(int circusId, [FromBody]Act act)
         {
-            var circus = _context.Circuses.FirstOrDefault(q => q.Id == id);
+            var circus = _context.Circuses.FirstOrDefault(q => q.Id == circusId);
+            
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            act.Owner = _userManager.GetUserId(User);
+            
+            act.Owner =  _userManager.GetUserId(User);
 
             circus.Acts.Add(act);
-            
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -103,22 +103,20 @@ namespace AngularCircus.web.Controllers.ApiControllers
                 }
             }
             //var fixActs = _context.Database.ExecuteSqlCommand("update Acts set Acts.CircusId = C.Id from Acts as A inner join Circuses as C on C.Owner = A.Owner");
-            // return CreatedAtAction("GetAct", new { id = act.Id }, act);
-            
-            return Ok(act);
+            return CreatedAtAction("GetAct", new { circusId = act.Id }, act);
 
         }
 
         // PUT api/acts/5
-        [HttpPut("~/api/circuses/{circusId}/act/{id}")]
-        public async Task<IActionResult> PutAct(int id, [FromBody] Act act)
+        [HttpPut("~/api/circuses/{circusId}/acts/{id}")]
+        public async Task<IActionResult> PutAct(int circusId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != act.Id)
+            if (circusId != act.Id)
             {
                 return BadRequest();
             }
@@ -133,7 +131,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActExists(id))
+                if (!ActExists(circusId))
                 {
                     return NotFound();
                 }
@@ -147,8 +145,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/circuses/{circusId}/act/{id}")]
-        public async Task<IActionResult> DeleteAct(int id)
+        [HttpDelete("~/api/circuses/{circusId}/acts/{id}")]
+        public async Task<IActionResult> DeleteAct(int circusId, [FromBody] Act act)
         {
             if (!ModelState.IsValid)
             {
@@ -157,7 +155,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             var userId = _userManager.GetUserId(User);
 
-            Act act = await _context.Acts
+            act = await _context.Acts
                 .Where(q => q.Circus.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Circus.Id == m.Id);
 
@@ -173,10 +171,10 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         }
 
-        private bool ActExists(int id)
+        private bool ActExists(int circusId)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Any(e => e.Owner == userId && e.Id == id);
+            return _context.Acts.Any(e => e.Owner == userId && e.Id == circusId);
         }
 
 

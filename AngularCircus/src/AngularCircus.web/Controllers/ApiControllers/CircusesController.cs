@@ -23,7 +23,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         private readonly AngularCircusContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
-        public AngularCircusContext Context { get; set; }
+        
 
         public CircusesController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
         {

@@ -1,0 +1,46 @@
+﻿@section scripts{
+    <script src="js/controllers/performerscontroller.js" type="text/javascript"></script>
+}"
+
+
+<div class="row" ng-cloak ng-controller="PerformersController as prc">
+    <script src="~/js/controllers/PerformerController.js"></script>
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <h3 class="panel-title"> Performer  |   Gender</h3>
+            </div>
+
+            <ol class="list-group">
+
+                <li class="list-group-item clearfix" ng-repeat="performer in prc.Performer">
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="performer.IsDone" ng-true-value="true" ng-false-value="false" />
+                                {{performer.name}} | {{performer.gender}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-danger" ng-click="prc.Remove(performer)"> Remove</button>
+                    </div>
+                </li>
+
+                <li class="list-group-item clearfix" ng-init="performer = {}">
+                    <div class="col-sm-8">
+                        <label> New Performer</label>
+                        <div class="form-group clearfix">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="performer.name" />
+                            <input type="text" class="form-control clearfix" placeholder="Sex" ng-model="performer.gender" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="prc.Add(performer)" ng-keydown="$event.which === 13 && prc.Add(performer)">Add</button>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
