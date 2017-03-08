@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>@ViewData["Title"] - Zoo Manager Application</title>
 
-    
-
-
-
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -63,26 +59,18 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-<<<<<<< HEAD
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li><a href="~/authentication/login">Login</a></li>
                         <li><a href="~/authentication/register">Register</a></li>
                     }
-                    <li><a href="~/circuses">Circuses</a></li>
+                    <li><a href="~/zoos">Zoos</a></li>
+
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a href="~/authentication/logout">Logout</a></li>
 
                     }
-
-
-=======
-                    <li><a href="~/authentication/login">Login</a></li>
-                    <li><a href="~/authentication/register">Register</a></li>
-                    <li><a href="~/zoos">Zoos</a></li>
-                    <li><a href="~/authentication/logout">Logout</a></li>
->>>>>>> c759d79937d0aba725697a999695226d961a5a0c
                 </ul>
             </div>
         </div>
