@@ -45,7 +45,7 @@ namespace AngularCircus.web
         public void ConfigureServices(IServiceCollection services)
         {
             //// Add framework services.
-            services.AddDbContext<AngularCircusContext>(
+            services.AddDbContext<AngularZooContext>(
                 );
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -55,7 +55,7 @@ namespace AngularCircus.web
                 options.Password.RequireLowercase = false;
                 options.Cookies.ApplicationCookie.LoginPath = "/authentication/login";
             })
-            .AddEntityFrameworkStores<AngularCircusContext>()
+            .AddEntityFrameworkStores<AngularZooContext>()
             .AddDefaultTokenProviders();
 
             services.AddMvc();
