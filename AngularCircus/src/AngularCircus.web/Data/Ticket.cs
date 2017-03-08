@@ -8,7 +8,7 @@ namespace AngularCircus.web.Models
         public decimal Price { get; set; }
         public string PriceType { get; set; }
         public bool IsDone { get; set; }
-        public Circus Circus { get; set; }
+        public Zoo Zoo { get; set; }
         public DateTime ShowDate { get; set; }
 
         public Ticket()
@@ -16,9 +16,9 @@ namespace AngularCircus.web.Models
 
         }
 
-        public Ticket(decimal price, string pricetype, string circus, DateTime showdate)
+        public Ticket(decimal price, string pricetype, string zoo, DateTime showdate)
         {
-            Circus.Name = circus;
+            Zoo.Name = zoo;
             PriceType = pricetype;
             ShowDate = showdate;
             Price = price;

@@ -1,0 +1,48 @@
+﻿@section scripts {
+    <script src="js/controllers/zooscontroller.js"> </script>
+
+}
+
+<div class="row" ng-cloak ng-controller="ZoosController as zc">
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="well" style="background-color:palegoldenrod">
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+
+                    <h3 class="panel-title"> Zoo</h3>
+                    <label> New Zoo</label>
+                </div>
+                <ol class="list-group">
+
+                    <li class="list-group-item clearfix" ng-repeat="zoo in zc.Zoo">
+                        <div class="col-sm-8">
+                            <div class="checkbox">
+
+                                <label>
+                                    <input type="checkbox" ng-model="zoo.isDone" ng-true-value="true" ng-false-value="false" />
+                                    {{zoo.name}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger" ng-click="zc.Remove(zoo)"> Remove</button>
+                            <a href="~/zoos/{{zoo.id}}/exhibits" button type="button" class="btn btn-success">Continue</a>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item clearfix" ng-init="zoo = {}">
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="zoo.name" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary" ng-click="zc.Add(zoo)" ng-keydown="$event.which === 13 && zc.Add(zoo)">Add</button>
+
+</div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+</div>
+    </div>
+

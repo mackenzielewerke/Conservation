@@ -1,0 +1,46 @@
+﻿@section scripts{
+<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Views/Acts/Act.cshtml
+    <script src="~/js/controllers/actscontroller.js" type="text/javascript"></script>
+=======
+    <script src="js/controllers/animalscontroller.js" type="text/javascript"></script>
+>>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Views/Animals/Animal.cshtml
+}
+
+
+<div class="row" ng-cloak ng-controller="AnimalsController as anc">
+    <script src="~/js/controllers/AnimalsController.js"></script>
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"> Performer</h3>
+            </div>
+            <ol class="list-group">
+                <li class="list-group-item clearfix" ng-repeat="animal in anc.Animal">
+                    <div class="col-sm-8">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="animal.IsDone" ng-true-value="true" ng-false-value="false" />
+                                {{animal.name}} 
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-danger" ng-click="anc.Remove(animal)"> Remove</button>
+
+                    </div>
+                </li>
+                <li class="list-group-item clearfix" ng-init="animal = {}">
+                    <div class="col-sm-8">
+                        <label> New Animal</label>
+                        <div class="form-group clearfix">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="animal.name" />                      
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="anc.Add(@Model.Id, animal)" ng-keydown="$event.which === 13 && anc.Add(@Model.Id, animal)">Add</button>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

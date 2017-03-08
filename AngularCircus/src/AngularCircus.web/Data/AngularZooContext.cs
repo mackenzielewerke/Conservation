@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace AngularCircus.web.Models
 {
-    public class AngularCircusContext : IdentityDbContext
+    public class AngularZooContext : IdentityDbContext
 
     {
-        public DbSet<Circus> Circuses { get; set; }
-        public DbSet<Performer> Performers { get; set; }
+        public DbSet<Zoo> Zoos { get; set; }
+        public DbSet<Animal> Animals { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Act> Acts { get; set; }
+        public DbSet<Exhibit> Exhibits { get; set; }
 
-        public AngularCircusContext()
+        public AngularZooContext()
             : base()
         {
 

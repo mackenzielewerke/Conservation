@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=Bahiana" rel="stylesheet">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>@ViewData["Title"] - Circus Manager Application</title>
+    <title>@ViewData["Title"] - Zoo Manager Application</title>
 
     
 
@@ -34,9 +34,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" type="text/javascript"></script>
     <script src="~/js/application.js" type="text/javascript"></script>
     <script src="~/js/controllers/authentication.js" type="text/javascript"></script>
-    <script src="~/js/controllers/circusescontroller.js" type="text/javascript"></script>
-    <script src="~/js/controllers/actscontroller.js" type="text/javascript"></script>
-    <script src="~/js/controllers/performerscontroller.js" type="text/javascript"></script>
+    <script src="~/js/controllers/zooscontroller.js" type="text/javascript"></script>
+    <script src="~/js/controllers/exhibitscontroller.js" type="text/javascript"></script>
+    <script src="~/js/controllers/animalscontroller.js" type="text/javascript"></script>
 
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -63,6 +63,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+<<<<<<< HEAD
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li><a href="~/authentication/login">Login</a></li>
@@ -76,6 +77,12 @@
                     }
 
 
+=======
+                    <li><a href="~/authentication/login">Login</a></li>
+                    <li><a href="~/authentication/register">Register</a></li>
+                    <li><a href="~/zoos">Zoos</a></li>
+                    <li><a href="~/authentication/logout">Logout</a></li>
+>>>>>>> c759d79937d0aba725697a999695226d961a5a0c
                 </ul>
             </div>
         </div>

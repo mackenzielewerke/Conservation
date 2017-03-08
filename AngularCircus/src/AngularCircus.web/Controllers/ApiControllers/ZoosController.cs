@@ -16,71 +16,88 @@ using Microsoft.AspNetCore.Http;
 namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
+<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
     [Route("~/circuses/")]
     [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
     public class CircusesController : Controller
+=======
+    //[Route("~/circus")]
+    [Authorize]
+    public class ZoosController : Controller
+>>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
     {
-        private readonly AngularCircusContext _context;
+        private readonly AngularZooContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
         
 
-        public CircusesController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
+        public ZoosController(UserManager<ApplicationUser> userManager, AngularZooContext context)
         {
             _userManager = userManager;
             _context = context;
 
         }
 
+<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
         [Route("~/circuses/")]
         public IActionResult Circus()
+=======
+        [Route("~/zoos/")]
+        [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+        public IActionResult Zoo()
+>>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
         {
             return View();
         }
 
-        [HttpGet("~/api/circuses")]
-        public IEnumerable<Circus> GetCircuses()
+        [HttpGet("~/api/zoos")]
+        public IEnumerable<Zoo> GetZoos()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Circuses.Where(q => q.Owner == userId).ToList();
+            return _context.Zoos.Where(q => q.Owner == userId).ToList();
         }
 
         // GET api/circuses/5
-        [HttpGet("~/api/circuses/{id}")]
-        public async Task<IActionResult> GetCircus(int id)
+        [HttpGet("~/api/zoos/{id}")]
+        public async Task<IActionResult> GetZoo(int id)
         {
             var userId = _userManager.GetUserId(User);
-            Circus circus = await _context.Circuses
+            Zoo zoo = await _context.Zoos
                 .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
 
-            if (circus == null)
+            if (zoo == null)
             {
                 return NotFound();
             }
 
-            return Ok(circus);
+            return Ok(zoo);
         }
 
 
 
         // POST api/circuses
+<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
         [HttpPost("~/api/circuses/")]
         public async Task<IActionResult> PostCircus([FromBody]Circus circus)
+=======
+        [HttpPost("~/api/zoos")]
+        public async Task<IActionResult> PostZoo([FromBody]Zoo zoo)
+>>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            circus.Owner = _userManager.GetUserId(User);
-            _context.Circuses.Add(circus);
+            zoo.Owner = _userManager.GetUserId(User);
+            _context.Zoos.Add(zoo);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch
             {
-                if (CircusExists(circus.Id))
+                if (ZooExists(zoo.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -89,25 +106,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
                     throw;
                 }
             }
-            return CreatedAtAction("GetCircus", new { id = circus.Id }, circus);
+            return CreatedAtAction("GetCircus", new { id = zoo.Id }, zoo);
         }
 
         // PUT api/circuses/5
-        [HttpPut("~/api/circuses/{id}")]
-        public async Task<IActionResult> PutCircus(int id, [FromBody] Circus circus)
+        [HttpPut("~/api/zoos/{id}")]
+        public async Task<IActionResult> PutZoo(int id, [FromBody] Zoo zoo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != circus.Id)
+            if (id != zoo.Id)
             {
                 return BadRequest();
             }
 
-            circus.Owner = _userManager.GetUserId(User);
-            _context.Entry(circus).State = EntityState.Modified;
+            zoo.Owner = _userManager.GetUserId(User);
+            _context.Entry(zoo).State = EntityState.Modified;
 
             try
             {
@@ -116,7 +133,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!CircusExists(id))
+                if (!ZooExists(id))
                 {
                     return NotFound();
                 }
@@ -130,8 +147,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/circuses/{id}")]
-        public async Task<IActionResult> DeleteCircus(int id)
+        [HttpDelete("~/api/zoos/{id}")]
+        public async Task<IActionResult> DeleteZoo(int id)
         {
             if(!ModelState.IsValid)
             {
@@ -140,25 +157,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             var userId = _userManager.GetUserId(User);
 
-            Circus circus = await _context.Circuses
+            Zoo zoo = await _context.Zoos
                 .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
-            if(circus == null)
+            if(zoo == null)
             {
                 return NotFound();
             }
 
-            _context.Circuses.Remove(circus);
+            _context.Zoos.Remove(zoo);
             await _context.SaveChangesAsync();
 
-            return Ok(circus);
+            return Ok(zoo);
         }
         
-        private bool CircusExists(int id)
+        private bool ZooExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Circuses.Any(e => e.Owner == userId && e.Id == id);
+            return _context.Zoos.Any(e => e.Owner == userId && e.Id == id);
         }
     }
 }

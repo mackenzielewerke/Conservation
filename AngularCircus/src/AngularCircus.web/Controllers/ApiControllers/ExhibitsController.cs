@@ -17,14 +17,14 @@ namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
     // [Route("~/act")]
-    public class ActsController : Controller
+    public class ExhibitsController : Controller
     {
-        private readonly AngularCircusContext _context;
+        private readonly AngularZooContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
         
 
-        public ActsController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
+        public ExhibitsController(UserManager<ApplicationUser> userManager, AngularZooContext context)
         {
             _userManager = userManager;
             _context = context;
@@ -32,59 +32,57 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
 
-        [Route("~/circuses/{id}/acts")]
-        public IActionResult Act(int id)
+        [Route("~/zoos/{id}/exhibits")]
+        public IActionResult Exhibit(int id)
         {
-            var circus = _context.Circuses.Include(q => q.Acts).FirstOrDefault(m => m.Id == id);
-            return View(circus);
+            var zoo = _context.Zoos.Include(q => q.Exhibits).FirstOrDefault(m => m.Id == id);
+            return View(zoo);
         }
 
-        [HttpGet("~/api/circuses/{circusId}/acts")]
-        public IEnumerable<Act> GetActs()
+        [HttpGet("~/api/zoos/{zooId}/exhibits")]
+        public IEnumerable<Exhibit> GetExhibits()
         {
             var userId = _userManager.GetUserId(User);
             
 
-            return _context.Acts
-                .Where(q => q.Circus.Owner == userId).ToList();
+            return _context.Exhibits.Where(q => q.Zoo.Owner == userId).ToList();
         }
 
         // GET api/acts/5
-        [HttpGet("api/circuses/{circusId}/acts/{id}")]
-        public async Task<IActionResult> GetAct(int circusId, int id)
+        [HttpGet("api/zoos/{zooId}/exhibits/{id}")]
+        public async Task<IActionResult> GetExhibit(int zooId) //, int id) //he only had one
         {
             
 
             var userId = _userManager.GetUserId(User);
 
-            var circus = _context.Circuses.Include(q => q.Acts).FirstOrDefault(q => q.Id == circusId);
-            var act = circus.Acts.FirstOrDefault(q => q.Id == id);
+            var zoo = _context.Zoos.Include(q => q.Exhibits).FirstOrDefault(q => q.Id == zooId);
+            var exhibit = zoo.Exhibits.FirstOrDefault(q => q.Id == zooId); //== id); //not sure if need circusId or id. He had one and hten the other soemhwere
 
-            if (act == null)
+            if (exhibit == null)
             {
                 return NotFound();
             }
 
-            await _context.SaveChangesAsync();
-            return Ok(act);
+            return Ok(exhibit);
         }
 
 
 
         // POST api/acts
-        [HttpPost("~/api/circuses/{circusId}/acts")]
-        public async Task<IActionResult> PostAct(int circusId, [FromBody]Act act)
+        [HttpPost("~/api/zoos/{zooId}/exhibits")]
+        public async Task<IActionResult> PostExhibit(int zooId, [FromBody]Exhibit exhibit)
         {
-            var circus = _context.Circuses.FirstOrDefault(q => q.Id == circusId);
+            var zoo = _context.Zoos.FirstOrDefault(q => q.Id == zooId);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            act.Owner =  _userManager.GetUserId(User);
+            exhibit.Owner =  _userManager.GetUserId(User);
 
-            circus.Acts.Add(act);
+            zoo.Exhibits.Add(exhibit);
 
             try
             {
@@ -92,7 +90,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             }
             catch
             {
-                if (ActExists(act.Id))
+                if (ExhibitExists(exhibit.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -102,26 +100,26 @@ namespace AngularCircus.web.Controllers.ApiControllers
                 }
             }
             //var fixActs = _context.Database.ExecuteSqlCommand("update Acts set Acts.CircusId = C.Id from Acts as A inner join Circuses as C on C.Owner = A.Owner");
-            return CreatedAtAction("GetAct", new { circusId = act.Id }, act);
+            return CreatedAtAction("GetExhibit", new { id = exhibit.Id }, exhibit);
 
         }
 
         // PUT api/acts/5
-        [HttpPut("~/api/circuses/{circusId}/acts/{id}")]
-        public async Task<IActionResult> PutAct(int circusId)
+        [HttpPut("~/api/zoos/{zooId}/exhibits/{id}")]
+        public async Task<IActionResult> PutExhibit(int id, [FromBody] Exhibit exhibit)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (circusId != act.Id)
+            if (id != exhibit.Id)
             {
                 return BadRequest();
             }
 
-            act.Owner = _userManager.GetUserId(User);
-            _context.Entry(act).State = EntityState.Modified;
+            exhibit.Owner = _userManager.GetUserId(User);
+            _context.Entry(exhibit).State = EntityState.Modified;
 
             try
             {
@@ -130,7 +128,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!ActExists(circusId))
+                if (!ExhibitExists(id))
                 {
                     return NotFound();
                 }
@@ -144,8 +142,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/acts/{id}")]
-        public async Task<IActionResult> DeleteAct(int circusId, [FromBody] Act act)
+        [HttpDelete("~/api/exhibits/{id}")]
+        public async Task<IActionResult> DeleteExhibit(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -154,26 +152,26 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             var userId = _userManager.GetUserId(User);
 
-            act = await _context.Acts
+            Exhibit exhibit = await _context.Exhibits
                 .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
-            if (act == null)
+            if (exhibit == null)
             {
                 return NotFound();
             }
 
-            _context.Acts.Remove(act);
+            _context.Exhibits.Remove(exhibit);
             await _context.SaveChangesAsync();
 
-            return Ok(act);
+            return Ok(exhibit);
 
         }
 
-        private bool ActExists(int circusId)
+        private bool ExhibitExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Acts.Any(e => e.Owner == userId && e.Id == circusId);
+            return _context.Exhibits.Any(e => e.Owner == userId && e.Id == id);
         }
 
 

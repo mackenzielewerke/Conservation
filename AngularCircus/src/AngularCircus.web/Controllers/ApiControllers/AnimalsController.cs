@@ -16,74 +16,80 @@ namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
     [Authorize]
-    public class PerformersController : Controller
+    public class AnimalsController : Controller
     {
-        private readonly AngularCircusContext _context;
+        private readonly AngularZooContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
-        public AngularCircusContext Context { get; set; }
 
-        public PerformersController(UserManager<ApplicationUser> userManager, AngularCircusContext context)
+        public AnimalsController(UserManager<ApplicationUser> userManager, AngularZooContext context)
         {
             _userManager = userManager;
             _context = context;
         }
 
-        [Route("~/api/circuses/{circusId}/acts/{actId}/performers/")]
+        [Route("~/exhibits/{id}/animals/")]
         //[Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
-        public IActionResult Index()
+        public IActionResult Animal(int id)
         {
-            return View();
+
+            var act = _context.Exhibits.Include(q => q.Animals).FirstOrDefault(m => m.Id == id);
+            return View(act);
         }
 
-        [Route("~/api/performers")]
+        [Route("~/api/exhibits/{exhibitId}/animals")]
         [HttpGet]
-        public IEnumerable<Performer> GetPerformers()
+        public IEnumerable<Animal> GetAnimals()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Performers.Where(q => q.Name == userId).ToList();
+            return _context.Animals.Where(q => q.Exhibit.Owner == userId).ToList(); //this act.Owner may be a problem
         }
         // GET api/performers/5
-        [HttpGet("~/performers/{id}")]
-        public async Task<IActionResult> GetPerformer([FromRoute] int id)
+        [HttpGet("api/exhibits/{exhibitId}/animals/{id}")]
+        public async Task<IActionResult> GetAnimal(int exhibitId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            
 
             var userId = _userManager.GetUserId(User);
-            Performer Performer = await _context.Performers
-                .SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+            var exhibit = _context.Exhibits.Include(q => q.Animals).FirstOrDefault(q => q.Id == exhibitId);
 
-            if (Performer == null)
+            var animal = exhibit.Animals.FirstOrDefault(q => q.Id == exhibitId);
+            //Performer Performer = await _context.Performers.SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
+
+            if (animal == null)
             {
                 return NotFound();
             }
 
-            return Ok(Performer);
+            return Ok(animal);
         }
 
 
 
         // POST api/performers
-        [HttpPost]
-        public async Task<IActionResult> PostPerformer([FromBody]Performer performer)
+        [HttpPost("~/api/exhibits/{exhibitId}/animals")]
+        public async Task<IActionResult> PostAnimal(int exhibitId, [FromBody]Animal animal)
         {
+            var exhibit = _context.Exhibits.FirstOrDefault(q => q.Id == exhibitId);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            performer.Name = _userManager.GetUserId(User);
-            _context.Performers.Add(performer);
+            animal.Owner = _userManager.GetUserId(User);
+
+            //performer.Name = _userManager.GetUserId(User);
+            //_context.Performers.Add(performer);
+
+            exhibit.Animals.Add(animal);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch
             {
-                if (PerformerExists(performer.Id))
+                if (AnimalExists(animal.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -92,25 +98,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
                     throw;
                 }
             }
-            return CreatedAtAction("GetPerformer", new { id = performer.Id }, performer);
+            return CreatedAtAction("GetAnimal", new { id = animal.Id }, animal);
         }
 
         // PUT api/performers/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerformer([FromBody]int id, [FromBody] Performer performer)
+        [HttpPut("~/api/exhibits/{exhibitId}/animals{id}")]
+        public async Task<IActionResult> PutAnimal(int id, [FromBody] Animal animal)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != performer.Id)
+            if (id != animal.Id)
             {
                 return BadRequest();
             }
 
-            performer.Name = _userManager.GetUserId(User);
-            _context.Entry(performer).State = EntityState.Modified;
+            animal.Owner = _userManager.GetUserId(User);
+            _context.Entry(animal).State = EntityState.Modified;
 
             try
             {
@@ -119,7 +125,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!PerformerExists(id))
+                if (!AnimalExists(id))
                 {
                     return NotFound();
                 }
@@ -133,8 +139,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/performers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerformer([FromRoute] int id)
+        [HttpDelete("~/api/animals/{id}")]
+        public async Task<IActionResult> DeleteAnimal([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -143,26 +149,26 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             var userId = _userManager.GetUserId(User);
 
-            Performer Performer = await _context.Performers
-                .Where(q => q.Name == userId)
+            Animal Animal = await _context.Animals
+                .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
-            if (Performer == null)
+            if (Animal == null)
             {
                 return NotFound();
             }
 
-            _context.Performers.Remove(Performer);
+            _context.Animals.Remove(Animal);
             await _context.SaveChangesAsync();
 
-            return Ok(Performer);
+            return Ok(Animal);
 
         }
 
-        private bool PerformerExists(int id)
+        private bool AnimalExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Performers.Any(e => e.Name == userId && e.Id == id);
+            return _context.Animals.Any(e => e.Name == userId && e.Id == id);
         }
     }
 

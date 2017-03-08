@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace AngularCircus.web.Migrations
 {
-    public partial class InitialMigration2 : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Circuses",
+                name: "Zoos",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -21,24 +21,7 @@ namespace AngularCircus.web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Circuses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Performers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Gender = table.Column<string>(nullable: true),
-                    IsDone = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Owner = table.Column<string>(nullable: true),
-                    Species = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Performers", x => x.Id);
+                    table.PrimaryKey("PK_Zoos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,23 +80,23 @@ namespace AngularCircus.web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Acts",
+                name: "Exhibits",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CircusId = table.Column<int>(nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Owner = table.Column<string>(nullable: true)
+                    Owner = table.Column<string>(nullable: true),
+                    ZooId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Acts", x => x.Id);
+                    table.PrimaryKey("PK_Exhibits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Acts_Circuses_CircusId",
-                        column: x => x.CircusId,
-                        principalTable: "Circuses",
+                        name: "FK_Exhibits_Zoos_ZooId",
+                        column: x => x.ZooId,
+                        principalTable: "Zoos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -124,19 +107,19 @@ namespace AngularCircus.web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CircusId = table.Column<int>(nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     PriceType = table.Column<string>(nullable: true),
-                    ShowDate = table.Column<DateTime>(nullable: false)
+                    ShowDate = table.Column<DateTime>(nullable: false),
+                    ZooId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Circuses_CircusId",
-                        column: x => x.CircusId,
-                        principalTable: "Circuses",
+                        name: "FK_Tickets_Zoos_ZooId",
+                        column: x => x.ZooId,
+                        principalTable: "Zoos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -227,15 +210,44 @@ namespace AngularCircus.web.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Acts_CircusId",
-                table: "Acts",
-                column: "CircusId");
+            migrationBuilder.CreateTable(
+                name: "Animals",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExhibitId = table.Column<int>(nullable: false),
+                    Gender = table.Column<string>(nullable: true),
+                    IsDone = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Owner = table.Column<string>(nullable: true),
+                    Species = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Animals", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Animals_Exhibits_ExhibitId",
+                        column: x => x.ExhibitId,
+                        principalTable: "Exhibits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_CircusId",
+                name: "IX_Animals_ExhibitId",
+                table: "Animals",
+                column: "ExhibitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exhibits_ZooId",
+                table: "Exhibits",
+                column: "ZooId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ZooId",
                 table: "Tickets",
-                column: "CircusId");
+                column: "ZooId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -278,10 +290,7 @@ namespace AngularCircus.web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Acts");
-
-            migrationBuilder.DropTable(
-                name: "Performers");
+                name: "Animals");
 
             migrationBuilder.DropTable(
                 name: "Tickets");
@@ -302,13 +311,16 @@ namespace AngularCircus.web.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Circuses");
+                name: "Exhibits");
 
             migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Zoos");
         }
     }
 }
