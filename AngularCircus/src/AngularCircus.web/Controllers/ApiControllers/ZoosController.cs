@@ -16,15 +16,9 @@ using Microsoft.AspNetCore.Http;
 namespace AngularCircus.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
-<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
-    [Route("~/circuses/")]
-    [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
-    public class CircusesController : Controller
-=======
     //[Route("~/circus")]
     [Authorize]
     public class ZoosController : Controller
->>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
     {
         private readonly AngularZooContext _context;
 
@@ -38,14 +32,9 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
         }
 
-<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
-        [Route("~/circuses/")]
-        public IActionResult Circus()
-=======
         [Route("~/zoos/")]
         [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Zoo()
->>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
         {
             return View();
         }
@@ -61,6 +50,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         [HttpGet("~/api/zoos/{id}")]
         public async Task<IActionResult> GetZoo(int id)
         {
+
             var userId = _userManager.GetUserId(User);
             Zoo zoo = await _context.Zoos
                 .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
@@ -76,13 +66,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/circuses
-<<<<<<< HEAD:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/CircusesController.cs
-        [HttpPost("~/api/circuses/")]
-        public async Task<IActionResult> PostCircus([FromBody]Circus circus)
-=======
         [HttpPost("~/api/zoos")]
         public async Task<IActionResult> PostZoo([FromBody]Zoo zoo)
->>>>>>> c759d79937d0aba725697a999695226d961a5a0c:AngularCircus/src/AngularCircus.web/Controllers/ApiControllers/ZoosController.cs
         {
             if (!ModelState.IsValid)
             {
