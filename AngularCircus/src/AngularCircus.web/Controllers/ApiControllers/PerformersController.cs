@@ -37,7 +37,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return View(act);
         }
 
-        [Route("~/acts/{actId}/performers")]
+        [Route("~/api/acts/{actId}/performers")]
         [HttpGet]
         public IEnumerable<Performer> GetPerformers()
         {
@@ -45,7 +45,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             return _context.Performers.Where(q => q.Act.Owner == userId).ToList(); //this act.Owner may be a problem
         }
         // GET api/performers/5
-        [HttpGet("~/acts/{actId}/performers/{id}")]
+        [HttpGet("api/acts/{actId}/performers/{id}")]
         public async Task<IActionResult> GetPerformer(int actId)
         {
             
@@ -67,7 +67,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/performers
-        [HttpPost("~/acts/{actId}/performers")]
+        [HttpPost("~/api/acts/{actId}/performers")]
         public async Task<IActionResult> PostPerformer(int actId, [FromBody]Performer performer)
         {
             var act = _context.Acts.FirstOrDefault(q => q.Id == actId);
@@ -102,7 +102,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // PUT api/performers/5
-        [HttpPut("~/acts/{actId}/performers{id}")]
+        [HttpPut("~/api/acts/{actId}/performers{id}")]
         public async Task<IActionResult> PutPerformer(int id, [FromBody] Performer performer)
         {
             if (!ModelState.IsValid)
