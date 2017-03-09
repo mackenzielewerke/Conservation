@@ -3,28 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using AngularCircus.web.Models;
+using AngularZoo.web.Models;
 
 namespace AngularCircus.web.Migrations
 {
-    [DbContext(typeof(AngularZooContext))]
-    [Migration("20170308170614_InitialMigration")]
-    partial class InitialMigration
+    [DbContext(typeof(AngularConservationContext))]
+    partial class AngularConservationContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AngularCircus.web.Models.Animal", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Animal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ExhibitId");
-
                     b.Property<string>("Gender");
+
+                    b.Property<int>("GroupId");
 
                     b.Property<bool>("IsDone");
 
@@ -36,12 +35,12 @@ namespace AngularCircus.web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExhibitId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Animals");
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Models.Exhibit", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Conservation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -52,19 +51,37 @@ namespace AngularCircus.web.Migrations
 
                     b.Property<string>("Owner");
 
-                    b.Property<int?>("ZooId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ZooId");
-
-                    b.ToTable("Exhibits");
+                    b.ToTable("Conservations");
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ConservationId");
+
+                    b.Property<bool>("IsDone");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Owner");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConservationId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("AngularZoo.web.Models.Ticket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("ConservationId");
 
                     b.Property<bool>("IsDone");
 
@@ -74,29 +91,11 @@ namespace AngularCircus.web.Migrations
 
                     b.Property<DateTime>("ShowDate");
 
-                    b.Property<int?>("ZooId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ZooId");
+                    b.HasIndex("ConservationId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("AngularCircus.web.Models.Zoo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("IsDone");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Owner");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Zoos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -261,7 +260,7 @@ namespace AngularCircus.web.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Data.ApplicationUser", b =>
+            modelBuilder.Entity("AngularZoo.web.Data.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser");
 
@@ -272,26 +271,26 @@ namespace AngularCircus.web.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Models.Animal", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Animal", b =>
                 {
-                    b.HasOne("AngularCircus.web.Models.Exhibit", "Exhibit")
+                    b.HasOne("AngularZoo.web.Models.Group", "Group")
                         .WithMany("Animals")
-                        .HasForeignKey("ExhibitId")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Models.Exhibit", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Group", b =>
                 {
-                    b.HasOne("AngularCircus.web.Models.Zoo", "Zoo")
-                        .WithMany("Exhibits")
-                        .HasForeignKey("ZooId");
+                    b.HasOne("AngularZoo.web.Models.Conservation", "Conservation")
+                        .WithMany("Groups")
+                        .HasForeignKey("ConservationId");
                 });
 
-            modelBuilder.Entity("AngularCircus.web.Models.Ticket", b =>
+            modelBuilder.Entity("AngularZoo.web.Models.Ticket", b =>
                 {
-                    b.HasOne("AngularCircus.web.Models.Zoo", "Zoo")
+                    b.HasOne("AngularZoo.web.Models.Conservation", "Conservation")
                         .WithMany()
-                        .HasForeignKey("ZooId");
+                        .HasForeignKey("ConservationId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

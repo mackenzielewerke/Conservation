@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AngularCircus.web.Controllers
+namespace AngularZoo.web.Controllers
 {
     public class HomeController : Controller
     {

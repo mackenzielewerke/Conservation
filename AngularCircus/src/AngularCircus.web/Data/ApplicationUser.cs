@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using AngularCircus.web.Models;
+using AngularZoo.web.Models;
 
-namespace AngularCircus.web.Data
+namespace AngularZoo.web.Data
 {
     public class ApplicationUser : IdentityUser
     {

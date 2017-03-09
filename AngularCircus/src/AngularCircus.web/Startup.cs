@@ -8,15 +8,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using AngularCircus.web.Models;
-using AngularCircus.web.Data;
-using AngularCircus.web.Services;
+using AngularZoo.web.Models;
+using AngularZoo.web.Data;
+using AngularZoo.web.Services;
 using Microsoft.EntityFrameworkCore;
 
 
 
 
-namespace AngularCircus.web
+namespace AngularZoo.web
 {
     public class Startup
     {
@@ -45,7 +45,7 @@ namespace AngularCircus.web
         public void ConfigureServices(IServiceCollection services)
         {
             //// Add framework services.
-            services.AddDbContext<AngularZooContext>(
+            services.AddDbContext<AngularConservationContext>(
                 );
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -55,7 +55,7 @@ namespace AngularCircus.web
                 options.Password.RequireLowercase = false;
                 options.Cookies.ApplicationCookie.LoginPath = "/authentication/login";
             })
-            .AddEntityFrameworkStores<AngularZooContext>()
+            .AddEntityFrameworkStores<AngularConservationContext>()
             .AddDefaultTokenProviders();
 
             services.AddMvc();

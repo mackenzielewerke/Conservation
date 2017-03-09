@@ -10,7 +10,7 @@ namespace AngularCircus.web.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Zoos",
+                name: "Conservations",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -21,7 +21,7 @@ namespace AngularCircus.web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Zoos", x => x.Id);
+                    table.PrimaryKey("PK_Conservations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,23 +80,23 @@ namespace AngularCircus.web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exhibits",
+                name: "Groups",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ConservationId = table.Column<int>(nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Owner = table.Column<string>(nullable: true),
-                    ZooId = table.Column<int>(nullable: true)
+                    Owner = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exhibits", x => x.Id);
+                    table.PrimaryKey("PK_Groups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exhibits_Zoos_ZooId",
-                        column: x => x.ZooId,
-                        principalTable: "Zoos",
+                        name: "FK_Groups_Conservations_ConservationId",
+                        column: x => x.ConservationId,
+                        principalTable: "Conservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -107,19 +107,19 @@ namespace AngularCircus.web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ConservationId = table.Column<int>(nullable: true),
                     IsDone = table.Column<bool>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
                     PriceType = table.Column<string>(nullable: true),
-                    ShowDate = table.Column<DateTime>(nullable: false),
-                    ZooId = table.Column<int>(nullable: true)
+                    ShowDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Zoos_ZooId",
-                        column: x => x.ZooId,
-                        principalTable: "Zoos",
+                        name: "FK_Tickets_Conservations_ConservationId",
+                        column: x => x.ConservationId,
+                        principalTable: "Conservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -216,8 +216,8 @@ namespace AngularCircus.web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ExhibitId = table.Column<int>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
+                    GroupId = table.Column<int>(nullable: false),
                     IsDone = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Owner = table.Column<string>(nullable: true),
@@ -227,27 +227,27 @@ namespace AngularCircus.web.Migrations
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Animals_Exhibits_ExhibitId",
-                        column: x => x.ExhibitId,
-                        principalTable: "Exhibits",
+                        name: "FK_Animals_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animals_ExhibitId",
+                name: "IX_Animals_GroupId",
                 table: "Animals",
-                column: "ExhibitId");
+                column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exhibits_ZooId",
-                table: "Exhibits",
-                column: "ZooId");
+                name: "IX_Groups_ConservationId",
+                table: "Groups",
+                column: "ConservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tickets_ZooId",
+                name: "IX_Tickets_ConservationId",
                 table: "Tickets",
-                column: "ZooId");
+                column: "ConservationId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -311,7 +311,7 @@ namespace AngularCircus.web.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Exhibits");
+                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -320,7 +320,7 @@ namespace AngularCircus.web.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Zoos");
+                name: "Conservations");
         }
     }
 }

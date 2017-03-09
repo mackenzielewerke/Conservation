@@ -1,19 +1,19 @@
 ﻿
 using System.Collections.Generic;
 
-namespace AngularCircus.web.Models
+namespace AngularZoo.web.Models
 {
-    public class Exhibit
+    public class Group
     {
         public int Id { get; set; }
         public string Owner { get; set; }
         public string Name { get; set; }
         public bool IsDone { get; set; }
 
-        public Zoo Zoo { get; set; }
+        public Conservation Conservation { get; set; }
 
         public virtual List<Animal> Animals { get; set; }
-        public Exhibit()
+        public Group()
         {
             Animals = new List<Animal>();
         }

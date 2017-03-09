@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using AngularCircus.web;
+using AngularZoo.web;
 
-namespace AngularCircus.web
+namespace AngularZoo.web
 {
     public class Program
     {

@@ -16,7 +16,7 @@
         vm.Animal = [];
         vm.exhibit = [];
 
-        var promise = $http.get('api/exhibits/' + vm.exhibit.id + '/animals');
+        var promise = $http.get('api/groups/' + vm.exhibit.id + '/animals');
 
         promise.then(function (result) {
             vm.Animal = result.data;
@@ -29,7 +29,7 @@
             animal.name = '';
             
 
-            var promise = $http.post('api/exhibits/'+ exhibitId + '/animals', copy);
+            var promise = $http.post('api/groups/'+ groupId + '/animals', copy);
             promise.then(function (result) {
                 vm.Animal.push(result.data);
             }, function (result) {

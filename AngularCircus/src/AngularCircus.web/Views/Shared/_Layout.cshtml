@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=Bahiana" rel="stylesheet">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-    <title>@ViewData["Title"] - Zoo Manager Application</title>
+    <title>@ViewData["Title"] - Conservation Manager Application</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -30,8 +30,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js" type="text/javascript"></script>
     <script src="~/js/application.js" type="text/javascript"></script>
     <script src="~/js/controllers/authentication.js" type="text/javascript"></script>
-    <script src="~/js/controllers/zooscontroller.js" type="text/javascript"></script>
-    <script src="~/js/controllers/exhibitscontroller.js" type="text/javascript"></script>
+    <script src="~/js/controllers/conservationscontroller.js" type="text/javascript"></script>
+    <script src="~/js/controllers/groupscontroller.js" type="text/javascript"></script>
     <script src="~/js/controllers/animalscontroller.js" type="text/javascript"></script>
 
     <environment names="Staging,Production">
@@ -54,7 +54,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Circus Manager</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Conservation Manager</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -64,7 +64,7 @@
                         <li><a href="~/authentication/login">Login</a></li>
                         <li><a href="~/authentication/register">Register</a></li>
                     }
-                    <li><a href="~/zoos">Zoos</a></li>
+                    <li><a href="~/conservations">Conservations</a></li>
 
                     @if (User.Identity.IsAuthenticated)
                     {

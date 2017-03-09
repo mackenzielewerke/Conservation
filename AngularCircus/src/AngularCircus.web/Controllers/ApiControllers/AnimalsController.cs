@@ -3,57 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AngularCircus.web.Models;
+using AngularZoo.web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using AngularCircus.web.Data;
+using AngularZoo.web.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 
 
-namespace AngularCircus.web.Controllers.ApiControllers
+namespace AngularZoo.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
     [Authorize]
     public class AnimalsController : Controller
     {
-        private readonly AngularZooContext _context;
+        private readonly AngularConservationContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
 
-        public AnimalsController(UserManager<ApplicationUser> userManager, AngularZooContext context)
+        public AnimalsController(UserManager<ApplicationUser> userManager, AngularConservationContext context)
         {
             _userManager = userManager;
             _context = context;
         }
 
-        [Route("~/exhibits/{id}/animals/")]
+        [Route("~/groups/{id}/animals/")]
         //[Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Animal(int id)
         {
 
-            var act = _context.Exhibits.Include(q => q.Animals).FirstOrDefault(m => m.Id == id);
-            return View(act);
+            var group = _context.Groups.Include(q => q.Animals).FirstOrDefault(m => m.Id == id);
+            return View(group);
         }
 
-        [Route("~/api/exhibits/{exhibitId}/animals")]
+        [Route("~/api/groups/{groupId}/animals")]
         [HttpGet]
         public IEnumerable<Animal> GetAnimals()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Animals.Where(q => q.Exhibit.Owner == userId).ToList(); //this act.Owner may be a problem
+            return _context.Animals.Where(q => q.Group.Owner == userId).ToList(); //this act.Owner may be a problem
         }
         // GET api/performers/5
-        [HttpGet("api/exhibits/{exhibitId}/animals/{id}")]
-        public async Task<IActionResult> GetAnimal(int exhibitId)
+        [HttpGet("api/groups/{groupId}/animals/{id}")]
+        public async Task<IActionResult> GetAnimal(int groupId)
         {
             
 
             var userId = _userManager.GetUserId(User);
-            var exhibit = _context.Exhibits.Include(q => q.Animals).FirstOrDefault(q => q.Id == exhibitId);
+            var group = _context.Groups.Include(q => q.Animals).FirstOrDefault(q => q.Id == groupId);
 
-            var animal = exhibit.Animals.FirstOrDefault(q => q.Id == exhibitId);
+            var animal = group.Animals.FirstOrDefault(q => q.Id == groupId);
             //Performer Performer = await _context.Performers.SingleOrDefaultAsync(m => m.Name == userId && m.Id == id);
 
             if (animal == null)
@@ -67,10 +67,10 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // POST api/performers
-        [HttpPost("~/api/exhibits/{exhibitId}/animals")]
-        public async Task<IActionResult> PostAnimal(int exhibitId, [FromBody]Animal animal)
+        [HttpPost("~/api/groups/{groupId}/animals")]
+        public async Task<IActionResult> PostAnimal(int groupId, [FromBody]Animal animal)
         {
-            var exhibit = _context.Exhibits.FirstOrDefault(q => q.Id == exhibitId);
+            var group = _context.Groups.FirstOrDefault(q => q.Id == groupId);
 
             if (!ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
             //performer.Name = _userManager.GetUserId(User);
             //_context.Performers.Add(performer);
 
-            exhibit.Animals.Add(animal);
+            group.Animals.Add(animal);
             try
             {
                 await _context.SaveChangesAsync();
@@ -102,7 +102,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
         }
 
         // PUT api/performers/5
-        [HttpPut("~/api/exhibits/{exhibitId}/animals{id}")]
+        [HttpPut("~/api/groups/{groupId}/animals{id}")]
         public async Task<IActionResult> PutAnimal(int id, [FromBody] Animal animal)
         {
             if (!ModelState.IsValid)

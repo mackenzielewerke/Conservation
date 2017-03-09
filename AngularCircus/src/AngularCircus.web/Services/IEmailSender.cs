@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AngularCircus.web.Services
+namespace AngularZoo.web.Services
 {
     public interface IEmailSender
     {

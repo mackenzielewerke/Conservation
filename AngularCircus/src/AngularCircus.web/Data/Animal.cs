@@ -1,4 +1,4 @@
-﻿namespace AngularCircus.web.Models
+﻿namespace AngularZoo.web.Models
 {
     public class Animal
     {
@@ -9,9 +9,9 @@
         public bool IsDone { get; set; }
 
         public string Species { get; set; }
-        public Exhibit Exhibit { get; set; }
+        public Group Group { get; set; }
 
-        public int ExhibitId {get; set;}
+        public int GroupId {get; set;}
         public Animal()
         {
 

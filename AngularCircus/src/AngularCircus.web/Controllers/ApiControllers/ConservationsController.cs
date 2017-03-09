@@ -3,86 +3,86 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AngularCircus.web.Models;
+using AngularZoo.web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using AngularCircus.web.Data;
+using AngularZoo.web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 
 
 
-namespace AngularCircus.web.Controllers.ApiControllers
+namespace AngularConservation.web.Controllers.ApiControllers
 {
     [Produces("application/json")]
     //[Route("~/circus")]
     [Authorize]
-    public class ZoosController : Controller
+    public class ConservationsController : Controller
     {
-        private readonly AngularZooContext _context;
+        private readonly AngularConservationContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
         
 
-        public ZoosController(UserManager<ApplicationUser> userManager, AngularZooContext context)
+        public ConservationsController(UserManager<ApplicationUser> userManager, AngularConservationContext context)
         {
             _userManager = userManager;
             _context = context;
 
         }
 
-        [Route("~/zoos/")]
+        [Route("~/conservations")]
         [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
-        public IActionResult Zoo()
+        public IActionResult Conservation()
         {
             return View();
         }
 
-        [HttpGet("~/api/zoos")]
-        public IEnumerable<Zoo> GetZoos()
+        [HttpGet("~/api/conservations")]
+        public IEnumerable<Conservation> GetConservations()
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Zoos.Where(q => q.Owner == userId).ToList();
+            return _context.Conservations.Where(q => q.Owner == userId).ToList();
         }
 
         // GET api/circuses/5
-        [HttpGet("~/api/zoos/{id}")]
-        public async Task<IActionResult> GetZoo(int id)
+        [HttpGet("~/api/conservations/{id}")]
+        public async Task<IActionResult> GetConservation(int id)
         {
 
             var userId = _userManager.GetUserId(User);
-            Zoo zoo = await _context.Zoos
+            Conservation conservation = await _context.Conservations
                 .SingleOrDefaultAsync(m => m.Owner == userId && m.Id == id);
 
-            if (zoo == null)
+            if (conservation == null)
             {
                 return NotFound();
             }
 
-            return Ok(zoo);
+            return Ok(conservation);
         }
 
 
 
         // POST api/circuses
-        [HttpPost("~/api/zoos")]
-        public async Task<IActionResult> PostZoo([FromBody]Zoo zoo)
+        [HttpPost("~/api/conservations")]
+        public async Task<IActionResult> PostConservation([FromBody]Conservation conservation)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            zoo.Owner = _userManager.GetUserId(User);
-            _context.Zoos.Add(zoo);
+            conservation.Owner = _userManager.GetUserId(User);
+            _context.Conservations.Add(conservation);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch
             {
-                if (ZooExists(zoo.Id))
+                if (ConservationExists(conservation.Id))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -91,25 +91,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
                     throw;
                 }
             }
-            return CreatedAtAction("GetCircus", new { id = zoo.Id }, zoo);
+            return CreatedAtAction("GetConservation", new { id = conservation.Id }, conservation);
         }
 
         // PUT api/circuses/5
-        [HttpPut("~/api/zoos/{id}")]
-        public async Task<IActionResult> PutZoo(int id, [FromBody] Zoo zoo)
+        [HttpPut("~/api/conservations/{id}")]
+        public async Task<IActionResult> PutConsesrvation(int id, [FromBody] Conservation conservation)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != zoo.Id)
+            if (id != conservation.Id)
             {
                 return BadRequest();
             }
 
-            zoo.Owner = _userManager.GetUserId(User);
-            _context.Entry(zoo).State = EntityState.Modified;
+            conservation.Owner = _userManager.GetUserId(User);
+            _context.Entry(conservation).State = EntityState.Modified;
 
             try
             {
@@ -118,7 +118,7 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             catch (DbUpdateConcurrencyException)
             {
-                if (!ZooExists(id))
+                if (!ConservationExists(id))
                 {
                     return NotFound();
                 }
@@ -132,8 +132,8 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
 
         // DELETE api/circuses/5
-        [HttpDelete("~/api/zoos/{id}")]
-        public async Task<IActionResult> DeleteZoo(int id)
+        [HttpDelete("~/api/conservations/{id}")]
+        public async Task<IActionResult> DeleteConservation(int id)
         {
             if(!ModelState.IsValid)
             {
@@ -142,25 +142,25 @@ namespace AngularCircus.web.Controllers.ApiControllers
 
             var userId = _userManager.GetUserId(User);
 
-            Zoo zoo = await _context.Zoos
+            Conservation conservation = await _context.Conservations
                 .Where(q => q.Owner == userId)
                 .SingleOrDefaultAsync(m => m.Id == id);
 
-            if(zoo == null)
+            if(conservation == null)
             {
                 return NotFound();
             }
 
-            _context.Zoos.Remove(zoo);
+            _context.Conservations.Remove(conservation);
             await _context.SaveChangesAsync();
 
-            return Ok(zoo);
+            return Ok(conservation);
         }
         
-        private bool ZooExists(int id)
+        private bool ConservationExists(int id)
         {
             var userId = _userManager.GetUserId(User);
-            return _context.Zoos.Any(e => e.Owner == userId && e.Id == id);
+            return _context.Conservations.Any(e => e.Owner == userId && e.Id == id);
         }
     }
 }

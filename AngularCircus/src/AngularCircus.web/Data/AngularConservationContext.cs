@@ -1,4 +1,4 @@
-﻿using AngularCircus.web.Data;
+﻿using AngularZoo.web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AngularCircus.web.Models
+namespace AngularZoo.web.Models
 {
-    public class AngularZooContext : IdentityDbContext
+    public class AngularConservationContext : IdentityDbContext
 
     {
-        public DbSet<Zoo> Zoos { get; set; }
+        public DbSet<Conservation> Conservations { get; set; }
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<Exhibit> Exhibits { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
-        public AngularZooContext()
+        public AngularConservationContext()
             : base()
         {
 
@@ -26,7 +26,7 @@ namespace AngularCircus.web.Models
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=AngularCircus;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=AngularConservation;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

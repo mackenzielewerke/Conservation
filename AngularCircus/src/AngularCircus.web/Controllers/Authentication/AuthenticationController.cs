@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using AngularCircus.web.Data;
+using AngularZoo.web.Data;
 using Microsoft.AspNetCore.Mvc;
-using AngularCircus.web.Models;
+using AngularZoo.web.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace AngularCircus.web.Controllers.Authentication
+namespace AngularZoo.web.Controllers.Authentication
 {
     [Produces("application/json")]
     [Route("~/authentication")]

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AngularCircus.web.Models
+namespace AngularZoo.web.Models
 {
-    public class ActRequest
+    public class GroupRequest
     {
         public string Name { get; set; }
-        public string Performers { get; set; }
+        public string Animals { get; set; }
 
     }
 }

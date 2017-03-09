@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AngularCircus.web.Models
+namespace AngularZoo.web.Models
 {
     public class Ticket
     {
@@ -8,7 +8,7 @@ namespace AngularCircus.web.Models
         public decimal Price { get; set; }
         public string PriceType { get; set; }
         public bool IsDone { get; set; }
-        public Zoo Zoo { get; set; }
+        public Conservation Conservation { get; set; }
         public DateTime ShowDate { get; set; }
 
         public Ticket()
@@ -16,9 +16,9 @@ namespace AngularCircus.web.Models
 
         }
 
-        public Ticket(decimal price, string pricetype, string zoo, DateTime showdate)
+        public Ticket(decimal price, string pricetype, string conservation, DateTime showdate)
         {
-            Zoo.Name = zoo;
+            Conservation.Name = conservation;
             PriceType = pricetype;
             ShowDate = showdate;
             Price = price;
