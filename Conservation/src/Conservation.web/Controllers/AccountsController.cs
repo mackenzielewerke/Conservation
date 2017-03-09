@@ -16,8 +16,8 @@ namespace Conservation.web.Controllers
     [Authorize]
     public class AccountsController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        public UserManager<ApplicationUser> _userManager;
+        public SignInManager<ApplicationUser> _signInManager;
 
 
         public AccountsController(

@@ -28,7 +28,7 @@ namespace Conservation.web.Controllers
         }
 
         [Route("~/conservations")]
-        [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+       // [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Conservation()
         {
             return View();

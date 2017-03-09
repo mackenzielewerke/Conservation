@@ -21,7 +21,7 @@ namespace Conservation.web.Data
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlite(@"Data Source=ConservationContext");
+            optionsBuilder.UseSqlite(@"Data Source=./Conservation.db");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

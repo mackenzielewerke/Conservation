@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0/",
-    "signature": "68811241930c3fc2af92ced1ad150cac2ab7ebb1"
+    "signature": "a7d4bf5d522d61f432907c20fc8ec0327cf4aeb2"
   },
   "compilationOptions": {
     "defines": [
@@ -34,7 +34,8 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
           "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0"
+          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Tools": "1.1.0"
         },
         "compile": {
           "Conservation.web.dll": {}
@@ -749,6 +750,17 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Design/1.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
+          "Microsoft.EntityFrameworkCore.Relational.Design": "1.1.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.NonGeneric": "4.3.0"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Design.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/1.1.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
@@ -761,6 +773,15 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Relational.Design/1.1.1": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.Design.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Sqlite/1.1.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "1.1.0",
@@ -769,6 +790,11 @@
         },
         "compile": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Sqlite.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/1.1.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "1.1.1"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/1.1.1": {
@@ -2754,7 +2780,8 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
           "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0"
+          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Tools": "1.1.0"
         },
         "runtime": {
           "Conservation.web.dll": {}
@@ -3472,6 +3499,17 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Design/1.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
+          "Microsoft.EntityFrameworkCore.Relational.Design": "1.1.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.NonGeneric": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Design.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/1.1.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
@@ -3484,6 +3522,15 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Relational.Design/1.1.1": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.1",
+          "NETStandard.Library": "1.6.1"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.Design.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Sqlite/1.1.0": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "1.1.0",
@@ -3492,6 +3539,11 @@
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Sqlite.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/1.1.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "1.1.1"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/1.1.1": {
@@ -5643,15 +5695,30 @@
       "serviceable": true,
       "sha512": "sha512-wkPi/5FriMthUoCBjqO/hCDEGdRrJ5aTGKa9jGHK7NYw1uSxb2FXksBuqqMfFve3sd2j4+9BpYtdvAJ6fzjeXg=="
     },
+    "Microsoft.EntityFrameworkCore.Design/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xFeAAi9LUckgeinjji7WPMwPUbZNb6mTVRhWAlo+RVsjpnEjeAQk3Gw4OP3Ln/yncji64J7e74ue+yIArQYt+Q=="
+    },
     "Microsoft.EntityFrameworkCore.Relational/1.1.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-wIeIC02b3uFQ0Mgd5yDcpzbGQs383p2BAkpMjNz2xffo9QAFXO1CDavuolRk5I2Rv/iBy9igB91BZoY0tpcMzA=="
     },
+    "Microsoft.EntityFrameworkCore.Relational.Design/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WZKmQwuDUTLtjhxT/6c3hiMJTwi8OBl9rsPljY/ZhcMFAsF8sLj4uVrpkuNmrg5DEK2dEtnQn6p+Y9miQiIeZw=="
+    },
     "Microsoft.EntityFrameworkCore.Sqlite/1.1.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-hfbLTqGyGui9ZkvrE7BYjSMOWMLTwINqhg7yU0h13/SG1crLkf2rbH9lSpi17fRlcygasuJXJFgONqHTRFknQQ=="
+    },
+    "Microsoft.EntityFrameworkCore.Tools/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sv9JJsG4p/zu4KrRXjTsZ/Bp1mdRbOLkqrxDtQo6P5e1O+1Z6qXm4gaR5km25tpqLN4QD10lX/Kw6MEyLWf2aQ=="
     },
     "Microsoft.Extensions.Caching.Abstractions/1.1.1": {
       "type": "package",

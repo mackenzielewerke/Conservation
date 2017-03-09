@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v1.0",
-    "signature": "2cc60c3610b293d796e1a8b21dc8fcda7078243e"
+    "signature": "20e00418b3065d2cd2264e57725704e85ef0fbd4"
   },
   "compilationOptions": {
     "defines": [
@@ -34,7 +34,8 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
           "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0"
+          "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
+          "Microsoft.EntityFrameworkCore.Tools": "1.1.0"
         },
         "runtime": {
           "Conservation.web.dll": {}
@@ -943,6 +944,20 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Design/1.1.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.1",
+          "Microsoft.EntityFrameworkCore.Relational.Design": "1.1.1",
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.NonGeneric": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Design.dll": {}
+        },
+        "compile": {
+          "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Design.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Relational/1.1.1": {
         "dependencies": {
           "Microsoft.CSharp": "4.3.0",
@@ -958,9 +973,10 @@
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
-      "Microsoft.EntityFrameworkCore.Relational.Design/1.0.1": {
+      "Microsoft.EntityFrameworkCore.Relational.Design/1.1.1": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "1.1.1"
+          "Microsoft.EntityFrameworkCore.Relational": "1.1.1",
+          "NETStandard.Library": "1.6.1"
         },
         "runtime": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.Relational.Design.dll": {}
@@ -997,7 +1013,7 @@
       },
       "Microsoft.EntityFrameworkCore.SqlServer.Design/1.0.1": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational.Design": "1.0.1",
+          "Microsoft.EntityFrameworkCore.Relational.Design": "1.1.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1"
         },
         "runtime": {
@@ -1005,6 +1021,11 @@
         },
         "compile": {
           "lib/netstandard1.3/Microsoft.EntityFrameworkCore.SqlServer.Design.dll": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/1.1.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "1.1.1"
         }
       },
       "Microsoft.Extensions.Caching.Abstractions/1.1.1": {
@@ -4216,15 +4237,20 @@
       "serviceable": true,
       "sha512": "sha512-wkPi/5FriMthUoCBjqO/hCDEGdRrJ5aTGKa9jGHK7NYw1uSxb2FXksBuqqMfFve3sd2j4+9BpYtdvAJ6fzjeXg=="
     },
+    "Microsoft.EntityFrameworkCore.Design/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xFeAAi9LUckgeinjji7WPMwPUbZNb6mTVRhWAlo+RVsjpnEjeAQk3Gw4OP3Ln/yncji64J7e74ue+yIArQYt+Q=="
+    },
     "Microsoft.EntityFrameworkCore.Relational/1.1.1": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-wIeIC02b3uFQ0Mgd5yDcpzbGQs383p2BAkpMjNz2xffo9QAFXO1CDavuolRk5I2Rv/iBy9igB91BZoY0tpcMzA=="
     },
-    "Microsoft.EntityFrameworkCore.Relational.Design/1.0.1": {
+    "Microsoft.EntityFrameworkCore.Relational.Design/1.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-GBN8QmrqcQo4WB4rKsPfzVaVKeHN6GSRF+eOTZWqK1vJ7T5kpG4PtxOkqOw8aZDRJbehAleD+dHYBOkngFzafA=="
+      "sha512": "sha512-WZKmQwuDUTLtjhxT/6c3hiMJTwi8OBl9rsPljY/ZhcMFAsF8sLj4uVrpkuNmrg5DEK2dEtnQn6p+Y9miQiIeZw=="
     },
     "Microsoft.EntityFrameworkCore.Sqlite/1.1.0": {
       "type": "package",
@@ -4240,6 +4266,11 @@
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-S35WEMAiiEzcLwZrUFo6yx0+vq68/4tJ+WxXJlLL4zX/SIn6Qyrp7B53vh4nYnPUFe3LvbwtMGXt8gpfnjp0cw=="
+    },
+    "Microsoft.EntityFrameworkCore.Tools/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sv9JJsG4p/zu4KrRXjTsZ/Bp1mdRbOLkqrxDtQo6P5e1O+1Z6qXm4gaR5km25tpqLN4QD10lX/Kw6MEyLWf2aQ=="
     },
     "Microsoft.Extensions.Caching.Abstractions/1.1.1": {
       "type": "package",

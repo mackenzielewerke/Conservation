@@ -46,7 +46,13 @@ namespace Conservation.web
             services.AddDbContext<ConservationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Cookies.ApplicationCookie.LoginPath = "/authentication/login";
+            })
                 .AddEntityFrameworkStores<ConservationContext>()
                 .AddDefaultTokenProviders();
 
