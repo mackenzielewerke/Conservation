@@ -2,30 +2,28 @@
     <script src="~/js/controllers/Authentication.js"></script>
 }
 
-<div class="row" ng-controller="AuthenticationController as auc">
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="well" style="background-color:beige">
-        <form ng-submit="auc.Register(user)">
+    <video loop muted autoplay class="bg_video">
+        <source src="~/images/640705600.mp4" type="video/mp4">
+        </video>
+        <div class="row" ng-controller="AuthenticationController as auc">
+            <div class="col-sm-offset-8">
+                <form ng-submit="auc.Register(user)">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Register
-            </div>
-            <div class="panel-body" ng-init="user = {}">
+                    <div class="panel">
+                        <div class="panel-body" ng-init="user = {}">
 
-                    <div class="form-group">
-                        <input type="text" name="Email" placeholder="Email" class="form-control" ng-model="user.email" />
+                            <div class="form-group">
+                                <input type="text" name="Email" placeholder="Email" class="form-control" ng-model="user.email" />
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="Password" placeholder="Password" class="form-control" ng-model="user.password" />
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="password" name="Password" placeholder="Password" class="form-control" ng-model="user.password" />
-                    </div>
-
-                </div>
-                <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
-</div>
+        </div>

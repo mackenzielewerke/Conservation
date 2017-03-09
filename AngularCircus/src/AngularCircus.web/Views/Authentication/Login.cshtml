@@ -3,14 +3,13 @@
 }
 
 <div class="row" ng-controller="AuthenticationController as auc">
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="well" style="background-color:beige">
-        <form ng-submit="auc.Login(user)">
+    <div class="col-sm-4">
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Login
-                </div>
+        <video loop muted autoplay class="bg_video">
+            <source src="~/images/611101637.mp4" type="video/mp4">
+        </video>
+        <form ng-submit="auc.Login(user)">
+            <div class="panel">
                 <div class="panel-body" ng-init="user = {}">
                     <div class="form-group">
                         <input type="text" name="Email" placeholder="Email" class="form-control" ng-model="user.email" />
@@ -21,10 +20,10 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <button type="submit" class="btn btn-success btn-block">Login</button>
                 </div>
             </div>
         </form>
+
     </div>
-</div>
 </div>
