@@ -52,17 +52,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @if (!User.Identity.IsAuthenticated)
-                    {
-                        <li><a href="~/account/login">Login</a></li>
-                        <li><a href="~/account/register">Register</a></li>
-                    }
-                    <li><a href="~/conservations">Conservations</a></li>
-
+                    <li><a href="~/circus/circus">Circus</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a href="~/authentication/logout">Logout</a></li>
-
+                    }
+                    else
+                    {
+                        <li><a href="~/authentication/login"> Login </a></li>
+                        <li><a href="~/authentication/register"> Register</a></li>
                     }
                 </ul>
             </div>
