@@ -11,6 +11,8 @@ namespace Conservation.web.Data
     public class ConservationContext : IdentityDbContext
     {
         public DbSet<Conservations> Conservations { get; set; }
+        public DbSet<Habitat> Habitats { get; set; }
+        public DbSet<Animal> Animals { get; set; }
 
         public ConservationContext()
             : base()
@@ -28,19 +30,19 @@ namespace Conservation.web.Data
             base.OnModelCreating(builder);
 
             builder.Entity<ApplicationUser>()
-                .ToTable("Users");
+                .ForSqliteToTable("Users");
             builder.Entity<IdentityRole>()
-                .ToTable("Roles");
+                .ForSqliteToTable("Roles");
             builder.Entity<IdentityRoleClaim<string>>()
-                .ToTable("RoleClaims");
+                .ForSqliteToTable("RoleClaims");
             builder.Entity<IdentityUserClaim<string>>()
-                .ToTable("UserClaims");
+                .ForSqliteToTable("UserClaims");
             builder.Entity<IdentityUserLogin<string>>()
-                .ToTable("UserLogins");
+                .ForSqliteToTable("UserLogins");
             builder.Entity<IdentityUserRole<string>>()
-                .ToTable("UserRoles");
+                .ForSqliteToTable("UserRoles");
             builder.Entity<IdentityUserToken<string>>()
-                .ToTable("UserTokens");
+                .ForSqliteToTable("UserTokens");
         }
     }
 }

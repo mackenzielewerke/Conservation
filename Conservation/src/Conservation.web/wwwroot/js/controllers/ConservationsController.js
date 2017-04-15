@@ -17,7 +17,7 @@
         promise.then(function (result) {
             vm.Conservation = result.data;
         }, function (result) {
-            console.log(result)
+            console.log(result);
         });
 
         vm.Add = function (conservation) {
@@ -26,7 +26,7 @@
 
             var promise = $http.post('/api/conservations', copy);
             promise.then(function (result) {
-                vm.Conservation.push(result.data)
+                vm.Conservation.push(result.data);
             });
         };
 

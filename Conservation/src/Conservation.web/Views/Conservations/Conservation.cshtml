@@ -1,0 +1,45 @@
+﻿@section scripts {
+    <script src="~/js/controllers/ConservationsController.js"> </script>
+}
+
+<div class="row" ng-cloak ng-controller="ConservationsController as cc">
+    <div class="col-sm-4 col-sm-offset-4">
+
+            <div class="panel">
+                <div class="panel-heading">
+
+                    <h3 class="panel-title"> Conservation</h3>
+                    <label> New Conservation</label>
+                </div>
+                <ol class="list-group">
+
+                    <li class="list-group-item clearfix" ng-repeat="conservation in cc.Conservation">
+                        <div class="col-sm-8">
+                            <div class="checkbox">
+
+                                <label>
+                                    <input type="checkbox" ng-model="conservation.isDone" ng-true-value="true" ng-false-value="false" />
+                                    {{conservation.name}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <button class="btn btn-danger" ng-click="cc.Remove(conservation)"> Remove</button>
+                            <a href="~/conservations/{{conservation.id}}/habitats" button type="button" class="btn btn-success">Continue</a>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item clearfix" ng-init="conservation = {}">
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" placeholder="Name" ng-model="conservation.name" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-primary" ng-click="cc.Add(conservation)" ng-keydown="$event.which === 13 && cc.Add(conservation)">Add</button>
+
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+

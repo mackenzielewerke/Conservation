@@ -13,22 +13,22 @@ using Microsoft.EntityFrameworkCore;
 namespace Conservation.web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Conservations")]
+    [Authorize]
     public class ConservationsController : Controller
     {
         private readonly ConservationContext _context;
 
         private UserManager<ApplicationUser> _userManager { get; set; }
 
-
         public ConservationsController(UserManager<ApplicationUser> userManager, ConservationContext context)
         {
             _userManager = userManager;
             _context = context;
+
         }
 
         [Route("~/conservations")]
-       // [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
+        [Authorize(ActiveAuthenticationSchemes = "Identity.Application")]
         public IActionResult Conservation()
         {
             return View();
@@ -55,7 +55,7 @@ namespace Conservation.web.Controllers
                 return NotFound();
             }
 
-            return Ok(conservation);
+            return Ok();
         }
 
 
@@ -75,7 +75,7 @@ namespace Conservation.web.Controllers
             return View();
         }
 
-        // PUT api/circuses/5
+        
         [HttpPut("~/api/conservations/{id}")]
         public async Task<IActionResult> PutConsesrvation(int id, [FromBody] Conservations conservation)
         {

@@ -9,6 +9,7 @@ namespace Conservation.web.Data
     {
         public int Id { get; set; }
         public string Type { get; set; }
+        public string Owner { get; set; }
         public Conservations Conservation { get; set; }
         public int ConservationId { get; set; }
         public List<Animal> Animals { get; set; }

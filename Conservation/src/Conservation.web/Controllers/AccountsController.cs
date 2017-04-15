@@ -49,7 +49,7 @@ namespace Conservation.web.Controllers
 
                 if (result.Succeeded)
                 {
-                    return Redirect("~/");
+                    return Ok(result.Succeeded);
 
                 }
                 else if (result.IsLockedOut)
@@ -105,7 +105,7 @@ namespace Conservation.web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("~/");
         }
 
  

@@ -3,17 +3,17 @@
 
     var application = angular.module('Application');
 
-    application.controller('AuthenticationController', AuthenticationController);
+    application.controller('AccountsController', AccountsController);
 
-    AuthenticationController.$inject = ['$http', '$location'];
+    AccountsController.$inject = ['$http', '$location'];
 
-    function AuthenticationController($http, $location) {
+    function AccountsController($http, $location) {
         var vm = this;
 
-        vm.Authentication = [];
+        vm.Account = [];
 
         vm.Register = function (model) {
-            var promise = $http.post('/authentication/register', model);
+            var promise = $http.post('/account/register', model);
             promise.then(function (result) {
                 $location.path('/');
             }, function (result) {
@@ -22,7 +22,7 @@
         };
 
         vm.Login = function (model) {
-            var promise = $http.post('/authentication/login', model);
+            var promise = $http.post('/account/login', model);
             promise.then(function (result) {
                 $location.path('/');
             }, function (result) {
