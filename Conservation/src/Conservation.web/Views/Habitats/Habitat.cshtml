@@ -3,11 +3,12 @@
 }
 
 <div class="row" ng-cloak ng-controller="HabitatsController as hc">
-    <script src="~/js/controllers/groupsController.js"></script>
     <div class="col-sm-4 col-sm-offset-4">
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"> Habitats </h3>
+                <label> New Habitat </label>
             </div>
             <ol class="list-group">
 
@@ -15,24 +16,22 @@
                     <div class="col-sm-8">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-true-value="true" ng-false-value="false" />
+                                <input type="checkbox" ng-model="habitat.name" ng-true-value="true" ng-false-value="false" />
                                 {{habitat.name}}
                             </label>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <button class="btn btn-danger" ng-click="hc.Remove(habitat)"> Remove</button>
-                        <a href="~/groups/{{habitat.id}}/animals" button type="button" class="btn btn-success">Continue</a>
+                        <a href="~/habitats/{{habitat.id}}/animals" button type="button" class="btn btn-success">Continue</a>
                     </div>
                 </li>
 
                 <li class="list-group-item clearfix" ng-init="habitat = {}">
                     <div class="col-sm-8">
-                        <label> New Exhibit</label>
-                        <div class="form-group clearfix">
+                        
                             <input type="text" class="form-control" placeholder="Name" ng-model="habitat.name" />
 
-                        </div>
                     </div>
                     <div class="col-sm-4">
                         <button type="button" class="btn btn-primary" ng-click="hc.Add(@Model.Id, habitat)" ng-keydown="$event.which === 13 && hc.Add(@Model.Id, habitat)">Add</button>

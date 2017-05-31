@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Conservation.web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Habitats")]
+    [Route("~/Habitats")]
     public class HabitatsController : Controller
     {
         private readonly ConservationContext _context;
