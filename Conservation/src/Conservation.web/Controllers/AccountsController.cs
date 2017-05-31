@@ -13,7 +13,6 @@ using Conservation.web.Services;
 
 namespace Conservation.web.Controllers
 {
-    [Authorize]
     public class AccountsController : Controller
     {
         public UserManager<ApplicationUser> _userManager;
@@ -29,7 +28,6 @@ namespace Conservation.web.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("~/account/login")]
         public IActionResult Login()
         {
@@ -37,7 +35,6 @@ namespace Conservation.web.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("~/account/login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
@@ -50,15 +47,6 @@ namespace Conservation.web.Controllers
                 if (result.Succeeded)
                 {
                     return Ok(result.Succeeded);
-
-                }
-                else if (result.IsLockedOut)
-                {
-                    return BadRequest(result);
-                }
-                else if (result.IsNotAllowed)
-                {
-                    return BadRequest(result);
                 }
                 else
                 {
@@ -69,7 +57,6 @@ namespace Conservation.web.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("~/account/register")]
         public IActionResult Register()
         {
@@ -77,7 +64,6 @@ namespace Conservation.web.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("~/account/register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest model)
         {
@@ -98,8 +84,7 @@ namespace Conservation.web.Controllers
             }
         }
 
-        //
-        // POST: /Account/LogOff
+
         [HttpPost]
         [Route("~/account/logout")]
         public async Task<IActionResult> Logout()
